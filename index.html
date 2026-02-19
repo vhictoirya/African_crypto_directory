@@ -8,30 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --bg2: #0f0f1a;
-    --surface: #13131f;
-    --surface2: #1a1a2e;
-    --surface3: #1f1f35;
-    --accent: #f97316;
-    --accent2: #fb923c;
-    --accent-dim: rgba(249,115,22,0.12);
-    --accent-border: rgba(249,115,22,0.25);
-    --text: #f1f0ee;
-    --text2: #a8a3b0;
-    --muted: #5a5468;
-    --border: rgba(255,255,255,0.06);
-    --border2: rgba(255,255,255,0.1);
-    --white: #ffffff;
-    --radius: 12px;
+    --bg: #0a0a0f; --bg2: #0f0f1a; --surface: #13131f; --surface2: #1a1a2e; --surface3: #1f1f35;
+    --accent: #f97316; --accent2: #fb923c; --accent-dim: rgba(249,115,22,0.12); --accent-border: rgba(249,115,22,0.25);
+    --text: #f1f0ee; --text2: #a8a3b0; --muted: #5a5468;
+    --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.1); --white: #ffffff; --radius: 12px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; overflow-x: hidden; }
   .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
   .orb-1 { width: 600px; height: 600px; background: rgba(249,115,22,0.07); top: -200px; left: -200px; }
   .orb-2 { width: 500px; height: 500px; background: rgba(99,102,241,0.06); bottom: -100px; right: -100px; }
-
-  /* TOPBAR */
   .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(10,10,15,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
   .logo-mark { width: 34px; height: 34px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 16px; color: #000; }
@@ -43,11 +29,7 @@
   .topbar-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
   .topbar-search input::placeholder { color: var(--muted); }
   .count-badge { padding: 5px 12px; background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap; }
-
-  /* LAYOUT */
   .layout { display: flex; padding-top: 64px; min-height: 100vh; position: relative; z-index: 1; }
-
-  /* SIDEBAR */
   .sidebar { width: 240px; flex-shrink: 0; position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; padding: 28px 0; border-right: 1px solid var(--border); background: rgba(13,13,26,0.4); }
   .sidebar::-webkit-scrollbar { width: 4px; }
   .sidebar::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
@@ -60,11 +42,7 @@
   .sidebar-item-count { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 100px; background: var(--surface3); color: var(--muted); margin-left: auto; }
   .sidebar-item.active .sidebar-item-count { background: var(--accent-border); color: var(--accent); }
   .sidebar-divider { height: 1px; background: var(--border); margin: 8px 16px 20px; }
-
-  /* CONTENT */
   .content { flex: 1; min-width: 0; padding: 32px 36px; }
-
-  /* HERO */
   .hero { background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%); border: 1px solid var(--border2); border-radius: 16px; padding: 32px 36px; margin-bottom: 32px; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%); border-radius: 50%; }
   .hero-tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 14px; }
@@ -78,21 +56,15 @@
   .hero-stat-num { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: var(--accent); line-height: 1; }
   .hero-stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
   .hero-stat-sep { width: 1px; height: 36px; background: var(--border2); }
-
-  /* SECTION HEADERS */
   .section-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; margin-top: 36px; }
   .section-header:first-of-type { margin-top: 0; }
   .section-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px rgba(249,115,22,0.6); flex-shrink: 0; margin-top: 4px; }
   .section-title-group { display: flex; flex-direction: column; gap: 3px; flex: 1; }
   .section-title { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text2); }
   .section-subtitle { font-size: 11.5px; color: var(--muted); font-weight: 400; line-height: 1.4; }
-  .section-line { flex: 1; height: 1px; background: var(--border); margin-top: 8px; min-width: 20px; max-width: 60px; }
+  .section-line { width: 40px; height: 1px; background: var(--border); margin-top: 8px; flex-shrink: 0; }
   .section-cnt { font-size: 12px; font-weight: 600; color: var(--muted); padding: 3px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; white-space: nowrap; margin-top: 2px; }
-
-  /* GRID */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 12px; margin-bottom: 12px; }
-
-  /* CARD */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; cursor: pointer; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
   .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.2s; }
   .card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
@@ -108,23 +80,21 @@
   .card-desc { font-size: 13px; color: var(--text2); line-height: 1.55; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
   .tag { padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 500; border: 1px solid; }
-  .tag-exchange      { background: rgba(249,115,22,0.1);  border-color: rgba(249,115,22,0.3);  color: #fb923c; }
-  .tag-payments      { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.25); color: #fbbf24; }
-  .tag-infrastructure{ background: rgba(99,102,241,0.1);  border-color: rgba(99,102,241,0.3);  color: #818cf8; }
-  .tag-defi          { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.25); color: #34d399; }
-  .tag-ramp          { background: rgba(232,121,249,0.08);border-color: rgba(232,121,249,0.25);color: #e879f9; }
-  .tag-blockchain    { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.25); color: #38bdf8; }
-  .tag-stablecoin    { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2);  color: #fdba74; }
-  .tag-remittance    { background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.2);  color: #4ade80; }
-  .tag-wallet        { background: rgba(148,163,184,0.08);border-color: rgba(148,163,184,0.2); color: #94a3b8; }
-  .tag-baas          { background: rgba(168,85,247,0.08); border-color: rgba(168,85,247,0.25); color: #c084fc; }
-  .tag-savings       { background: rgba(251,146,60,0.08); border-color: rgba(251,146,60,0.2);  color: #fb923c; }
-  .tag-default       { background: rgba(90,84,104,0.15);  border-color: rgba(90,84,104,0.35);  color: var(--muted); }
+  .tag-exchange       { background: rgba(249,115,22,0.1);  border-color: rgba(249,115,22,0.3);  color: #fb923c; }
+  .tag-payments       { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.25); color: #fbbf24; }
+  .tag-infrastructure { background: rgba(99,102,241,0.1);  border-color: rgba(99,102,241,0.3);  color: #818cf8; }
+  .tag-defi           { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.25); color: #34d399; }
+  .tag-ramp           { background: rgba(232,121,249,0.08);border-color: rgba(232,121,249,0.25);color: #e879f9; }
+  .tag-blockchain     { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.25); color: #38bdf8; }
+  .tag-stablecoin     { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2);  color: #fdba74; }
+  .tag-remittance     { background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.2);  color: #4ade80; }
+  .tag-wallet         { background: rgba(148,163,184,0.08);border-color: rgba(148,163,184,0.2); color: #94a3b8; }
+  .tag-baas           { background: rgba(168,85,247,0.08); border-color: rgba(168,85,247,0.25); color: #c084fc; }
+  .tag-savings        { background: rgba(251,146,60,0.08); border-color: rgba(251,146,60,0.2);  color: #fb923c; }
+  .tag-default        { background: rgba(90,84,104,0.15);  border-color: rgba(90,84,104,0.35);  color: var(--muted); }
   .card-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto; }
   .card-funding { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); }
   .card-employees { font-size: 11px; color: var(--muted); }
-
-  /* MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(12px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto; position: relative; animation: fadeUp 0.22s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
@@ -147,41 +117,30 @@
   .modal-field label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.13em; color: var(--muted); display: block; margin-bottom: 4px; }
   .modal-field p { font-size: 14px; color: var(--text); font-weight: 500; }
   .modal-field p.hi { color: var(--accent); font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; }
+  .modal-field a { color: var(--accent); text-decoration: none; }
+  .modal-field a:hover { text-decoration: underline; }
   .modal-sub { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
   .modal-investors { font-size: 13.5px; color: var(--text2); line-height: 1.65; margin-bottom: 22px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
-  .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .modal-divider { width: 1px; background: var(--border2); align-self: stretch; margin: 0 4px; min-height: 32px; }
   .btn { padding: 9px 16px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; cursor: pointer; border: none; white-space: nowrap; }
   .btn-primary { background: var(--accent); color: #000; }
   .btn-primary:hover { background: var(--accent2); box-shadow: 0 4px 16px rgba(249,115,22,0.35); }
   .btn-secondary { background: var(--surface2); border: 1px solid var(--border2); color: var(--text2); }
   .btn-secondary:hover { border-color: rgba(249,115,22,0.4); color: var(--accent); background: var(--accent-dim); }
-
-  /* EMPTY */
   .empty { text-align: center; padding: 80px 20px; color: var(--muted); }
   .empty .e-icon { font-size: 48px; margin-bottom: 16px; }
   .empty h3 { font-family: 'Outfit', sans-serif; font-size: 20px; color: var(--text2); margin-bottom: 8px; font-weight: 700; }
-
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
-
-  @media (max-width: 900px) {
-    .sidebar { display: none; }
-    .topbar { padding: 0 20px; }
-    .content { padding: 20px; }
-    .hero { padding: 24px 20px; }
-    .grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 600px) {
-    .modal-grid { grid-template-columns: 1fr; }
-    .modal-hero, .modal-body { padding: 20px; }
-  }
+  @media (max-width: 900px) { .sidebar { display: none; } .topbar { padding: 0 20px; } .content { padding: 20px; } .hero { padding: 24px 20px; } .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .modal-grid { grid-template-columns: 1fr; } .modal-hero, .modal-body { padding: 20px; } }
 </style>
 </head>
 <body>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
-
 <nav class="topbar">
   <a href="#" class="logo">
     <div class="logo-mark">A</div>
@@ -195,14 +154,12 @@
     <span class="count-badge" id="count-badge">Loading…</span>
   </div>
 </nav>
-
 <div class="layout">
   <aside class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">Category</div>
       <button class="sidebar-item active" data-cat="all" onclick="filterCat(this)">
-        <span class="sidebar-item-icon">⊞</span>
-        <span style="flex:1">All Categories</span>
+        <span class="sidebar-item-icon">⊞</span><span style="flex:1">All Categories</span>
         <span class="sidebar-item-count" id="cnt-all">—</span>
       </button>
     </div>
@@ -227,7 +184,6 @@
       <div class="sidebar-label">Browse by Type</div>
     </div>
   </aside>
-
   <main class="content">
     <div class="hero">
       <div class="hero-tag">Live Directory</div>
@@ -246,14 +202,12 @@
     <div id="directory"></div>
   </main>
 </div>
-
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-content"></div>
   </div>
 </div>
-
 <script>
 const DATA = [
   {
@@ -271,6 +225,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Johannesburg, South Africa",
     "ceo": "Farzam Ehsani",
+    "ceoTwitter": "https://x.com/farzamehsani?s=21",
+    "ceoLinkedin": "https://www.linkedin.com/in/farzam-ehsani?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/valr/",
     "twitter": "https://x.com/valrdotcom?s=21",
     "investors": "",
@@ -291,6 +247,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lekki, Nigeria",
     "ceo": "Michael Adeyeri",
+    "ceoTwitter": "https://x.com/michael_adeyeri?s=21",
+    "ceoLinkedin": "https://www.linkedin.com/in/michaeladeyeri?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/getbusha/",
     "twitter": "https://x.com/getbusha?s=21",
     "investors": "",
@@ -311,6 +269,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lagos, Nigeria",
     "ceo": "Buchi Okoro",
+    "ceoTwitter": "https://x.com/buchiokoro_?s=21",
+    "ceoLinkedin": "https://www.linkedin.com/in/buchi-okoro?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/quidax/",
     "twitter": "https://x.com/quidaxglobal?s=21",
     "investors": "",
@@ -331,6 +291,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Nairobi, Kenya",
     "ceo": "Felix Macharia",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/felix-macharia-a01621154?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/kotanipay/",
     "twitter": "https://x.com/kotanipay?s=21",
     "investors": "DCG/Luno, Flori Ventures, Adaverse, Peer VC",
@@ -349,6 +311,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "63/66 Hatton Garden, Fifth Floor, Suite 23, London, England, EC1N 8LE",
     "ceo": "Moses Morayo Adeniji.",
+    "ceoTwitter": "https://x.com/mosesmorayo?s=21",
+    "ceoLinkedin": "https://ng.linkedin.com/in/moses-adeniji-a17935b6?utm_source=chatgpt.com",
     "linkedin": "https://www.linkedin.com/company/paychant/",
     "twitter": "https://x.com/paychant?s=21",
     "investors": "",
@@ -367,6 +331,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Lagos, Nigeria",
     "ceo": "Nnaemeka Nwosu",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/mrnwosu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/scalexramp/",
     "twitter": "https://x.com/scalexramp?s=21",
     "investors": "EMURGO (EMURGO Africa), Adaverse (Cardano ecosystem accelerator), and Hacked Capital",
@@ -385,6 +351,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Accra, Ghana",
     "ceo": "Atsu Davoh",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/atsu-davoh-995437168?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/bitsika/",
     "twitter": "https://x.com/bitsikaafrica?s=21",
     "investors": "Microtraction (lead on early seed), YZi Labs / Binance Labs (listed in some databases), and Berrywood Capital",
@@ -403,6 +371,8 @@ const DATA = [
     "employees": "201 - 500",
     "hq": "Nairobi, Kenya",
     "ceo": "Elizabeth Rossiello",
+    "ceoTwitter": "https://x.com/e_rossiello",
+    "ceoLinkedin": "https://www.linkedin.com/in/elizabeth-rossiello-589b8b1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/azafinance/",
     "twitter": "https://x.com/aza_africa?s=21",
     "investors": "Greycroft, Plug and Play, Draper Associates",
@@ -423,6 +393,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Lagos, Nigeria",
     "ceo": "Obi Emetarom",
+    "ceoTwitter": "https://x.com/obi_emetarom",
+    "ceoLinkedin": "https://www.linkedin.com/in/obiemetarom/",
     "linkedin": "https://www.linkedin.com/company/zonenetwork/",
     "twitter": "https://x.com/zonenetworkhq",
     "investors": "Flourish Ventures, TLcom Capital",
@@ -443,6 +415,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lagos, Nigeria",
     "ceo": "Ife Johnson",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/ife-johnson-60a409170/",
     "linkedin": "https://www.linkedin.com/company/juicyway/",
     "twitter": "https://x.com/juicywayhq",
     "investors": "P1 Ventures, Ventures Platform, Future Africa, Magic Fund, and Microtraction",
@@ -462,6 +436,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Lagos, Nigeria",
     "ceo": "Ayo Adewuyi (Head of Product)",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/ayoadewuyi/?originalSubdomain=ng",
     "linkedin": "https://www.linkedin.com/company/prestmit/",
     "twitter": "https://x.com/prestmit",
     "investors": "",
@@ -482,6 +458,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Lagos, Nigeria",
     "ceo": "Oluwatimilehin Oluwasanmi",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/oluwatimilehin-oluwasanmi-14412725a/?utm_source=chatgpt%2Ecom&originalSubdomain=ng",
     "linkedin": "https://www.linkedin.com/company/getcryptonia/",
     "twitter": "https://x.com/getcryptonia",
     "investors": "",
@@ -502,6 +480,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Lagos, Nigeria",
     "ceo": "Dami Etomi",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/dami-etomi/",
     "linkedin": "https://www.linkedin.com/company/shigadigital/",
     "twitter": "https://x.com/shigadigital",
     "investors": "Tether",
@@ -522,6 +502,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lagos, Nigeria",
     "ceo": "Pascal Ntsama IV",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/pascal-ntsama-iv-92297728/",
     "linkedin": "https://www.linkedin.com/company/canza-finance/",
     "twitter": "https://x.com/Canza_Finance",
     "investors": "Polychain\u202fCapital, Protocol\u202fLabs, Blizzard\u202fFund (Avalanche\u2019s fund), 99\u202fCapital, Stratified\u202fCapital, Hyperithm, Dominance\u202fVentures, Bixin\u202fVentures, ConsenSys\u202fMesh, Protocol Labs again, Emurgo\u202fVentures, MEXC\u202fGlobal, NGC\u202fVentures, XanPool, HashKey\u202fCapital",
@@ -541,6 +523,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Abuja, Nigeria",
     "ceo": "Adedeji Owonibi",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/adedeji-owonibi-/?originalSubdomain=ng",
     "linkedin": "https://www.linkedin.com/company/convexity/",
     "twitter": "https://x.com/withconvexity_",
     "investors": "UNICEF Venture Fund (direct), broader ecosystem ties with DeFi Technologies Inc., Coinbase Ventures, Adaverse (via cNGN infrastructure)",
@@ -559,6 +543,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lekki, Nigeria",
     "ceo": "Daniel Anwuli",
+    "ceoTwitter": "https://x.com/GmDanhy",
+    "ceoLinkedin": "https://www.linkedin.com/in/gmdanhy/",
     "linkedin": "https://www.linkedin.com/company/spenda-africa-limited/?utm_campaign=linkinbio&utm_medium=referral&utm_source=later-linkinbio",
     "twitter": "https://x.com/MySpenda",
     "investors": "",
@@ -577,6 +563,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Lagos, Nigeria",
     "ceo": "Toochukwu Okoro",
+    "ceoTwitter": "https://x.com/toochukwuokoro2?s=21",
+    "ceoLinkedin": "https://www.linkedin.com/in/toochukwu-okoro?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/useazza/",
     "twitter": "https://x.com/useazza?s=21",
     "investors": "",
@@ -596,6 +584,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Accra, Ghana",
     "ceo": "Emmanuel Kusi",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/emmanuel-kusi-0499541a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/iexchangeglobal/",
     "twitter": "https://x.com/iexchangep2p?s=21",
     "investors": "",
@@ -614,6 +604,8 @@ const DATA = [
     "employees": "",
     "hq": "Tanzania",
     "ceo": "David Machuche",
+    "ceoTwitter": "https://x.com/machuche1",
+    "ceoLinkedin": "https://www.linkedin.com/in/david-machuche-1a9954b7/",
     "linkedin": "https://www.linkedin.com/showcase/neda-pay/posts/?feedView=all",
     "twitter": "https://x.com/nedapay_xyz",
     "investors": "",
@@ -632,6 +624,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lagos, Nigeria",
     "ceo": "Miracle Anyanwu",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/miracleanyanwu/",
     "linkedin": "https://www.linkedin.com/company/maplerad/",
     "twitter": "https://x.com/withmaplerad",
     "investors": "Valar Ventures, Golden Palm Investments, Michael Vaughn, Babs Ogundeyi, ArMYN Capital, Dunbar Capital, Strawhat Investment, Polymath Capital, Unpopular Ventures, Sean Mahsoul, MyAsiaVC",
@@ -650,6 +644,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Lagos, Nigeria",
     "ceo": "Seyi Ebenezer",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/seyi-ebenezer-aca-cma-aci-acib-ctp-cisa-21099b22/",
     "linkedin": "https://www.linkedin.com/company/payaza-africa/",
     "twitter": "https://x.com/mypayaza",
     "investors": "",
@@ -668,6 +664,8 @@ const DATA = [
     "employees": "1 - 10",
     "hq": "Nigeria",
     "ceo": "Karla Nwaeke",
+    "ceoTwitter": "https://x.com/_karlagod",
+    "ceoLinkedin": "https://www.linkedin.com/in/karlagod-932b1b44/",
     "linkedin": "",
     "twitter": "https://x.com/BitsaveProtocol",
     "investors": "Leo Capital",
@@ -686,6 +684,8 @@ const DATA = [
     "employees": "",
     "hq": "Lagos, Nigeria",
     "ceo": "",
+    "ceoTwitter": "",
+    "ceoLinkedin": "",
     "linkedin": "",
     "twitter": "https://x.com/Ifalabs",
     "investors": "Base, Convexity",
@@ -704,6 +704,8 @@ const DATA = [
     "employees": "",
     "hq": "Nigeria",
     "ceo": "Folajin Temidayo",
+    "ceoTwitter": "https://x.com/folajindayo",
+    "ceoLinkedin": "https://www.linkedin.com/in/temidayofolajin2864/",
     "linkedin": "https://www.linkedin.com/company/getzerocard/",
     "twitter": "https://x.com/getzerocard",
     "investors": "",
@@ -722,6 +724,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Delaware, USA",
     "ceo": "Emmanuel Njoku",
+    "ceoTwitter": "https://x.com/njokuScript",
+    "ceoLinkedin": "https://www.linkedin.com/in/njokuscript/",
     "linkedin": "https://www.linkedin.com/company/lazerpay/posts/?feedView=all",
     "twitter": "https://x.com/lazerpay",
     "investors": "Nestcoin, Nuwa Capital, Voltron Capital, and Paystack\u2019s Shola Akinlade.",
@@ -740,6 +744,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Accra, Ghana",
     "ceo": "Kofi Genfi",
+    "ceoTwitter": "https://x.com/K_Genfi",
+    "ceoLinkedin": "https://www.linkedin.com/in/mrgenfi/",
     "linkedin": "https://www.linkedin.com/company/officialmazzuma/",
     "twitter": "https://x.com/OfficialMazzuma",
     "investors": "Adaverse, CV Labs, MTN Ghana, Vodafone Ghana, and AirtelTigo",
@@ -758,6 +764,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Lagos, Nigeria",
     "ceo": "Dickson Nsofor",
+    "ceoTwitter": "https://x.com/DicksonNsofor",
+    "ceoLinkedin": "https://www.linkedin.com/in/dickson-nsofor-90039449/",
     "linkedin": "https://www.linkedin.com/company/thekorahq/",
     "twitter": "https://x.com/thekorahq",
     "investors": "",
@@ -776,6 +784,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Lekki, Lagos, Nigeria",
     "ceo": "Obi Emetarom",
+    "ceoTwitter": "https://x.com/obi_emetarom",
+    "ceoLinkedin": "https://www.linkedin.com/in/obiemetarom/",
     "linkedin": "https://www.linkedin.com/company/zonenetwork/",
     "twitter": "https://x.com/zonenetworkhq",
     "investors": "Flourish Ventures and TLcom Capital, with participation from Digital Currency Group, Verod\u2011Kepple Africa Ventures, Alter Global",
@@ -794,6 +804,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lagos, Nigeria",
     "ceo": "Ruth\u202fIselema",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/ruth-iselema/",
     "linkedin": "https://www.linkedin.com/company/bitmamaexchange/",
     "twitter": "https://x.com/bitmamaexchange",
     "investors": "Flori Ventures, Emergence Capital, Fedha Capital, angels",
@@ -812,6 +824,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Lagos, Nigeria",
     "ceo": "Chinyere \u202fNnadi",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/chinnadi/",
     "linkedin": "https://www.linkedin.com/company/themaraverse/",
     "twitter": "https://x.com/marawallet_app",
     "investors": "",
@@ -830,6 +844,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Lagos, Nigeria",
     "ceo": "Franklin Peters",
+    "ceoTwitter": "https://x.com/boracle01",
+    "ceoLinkedin": "https://www.linkedin.com/in/franklin-peters-fims-b5452795/",
     "linkedin": "https://www.linkedin.com/company/boundlesspay/",
     "twitter": "https://x.com/boundlesspay",
     "investors": "Tekedia Capital, Adaverse / EMURGO Africa",
@@ -848,6 +864,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Nigeria",
     "ceo": "Tobi Arowolo",
+    "ceoTwitter": "",
+    "ceoLinkedin": "",
     "linkedin": "https://www.linkedin.com/company/fintava-technology/",
     "twitter": "https://x.com/fintavapay",
     "investors": "",
@@ -866,6 +884,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Wilmington, Delaware, USA",
     "ceo": "Bashir Aminu",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/bashir-aminu-055a9987/",
     "linkedin": "https://www.linkedin.com/company/getpartna/",
     "twitter": "https://x.com/coinpHQ",
     "investors": "Allegory Capital, Voltron Capital, Flori Ventures, Marek Olszewski & Rene Reinsberg",
@@ -886,6 +906,8 @@ const DATA = [
     "employees": "11 -50",
     "hq": "",
     "ceo": "Yele Bademosi",
+    "ceoTwitter": "https://x.com/YeleBademosi",
+    "ceoLinkedin": "linkedin.com/in/yelebademosi/",
     "linkedin": "https://www.linkedin.com/company/onboardbynestcoin/",
     "twitter": "https://x.com/OnboardGlobal",
     "investors": "Lava Ventures, Adaverse, Coinbase Ventures, and Kairos Angels",
@@ -904,6 +926,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "",
     "ceo": "Yele Bademosi",
+    "ceoTwitter": "https://x.com/YeleBademosi",
+    "ceoLinkedin": "linkedin.com/in/yelebademosi/",
     "linkedin": "https://www.linkedin.com/company/nestcoin/",
     "twitter": "https://x.com/Nestcoin",
     "investors": "",
@@ -924,6 +948,8 @@ const DATA = [
     "employees": "101 - 250",
     "hq": "Atlanta, Georgia, USA",
     "ceo": "Chris Maurice",
+    "ceoTwitter": "https://x.com/chrismaurice?s=21",
+    "ceoLinkedin": "https://www.linkedin.com/in/chrismaurice18?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/yellowcardapp/",
     "twitter": "https://x.com/yellowcard_app?s=21",
     "investors": "Polychain Capital, Block Inc., Winklevoss Capital, Third Prime, Castle Island Ventures, Galaxy Ventures",
@@ -944,6 +970,8 @@ const DATA = [
     "employees": "201 - 500",
     "hq": "San Francisco, USA / Lagos, Nigeria",
     "ceo": "Olugbenga \"GB\" Agboola",
+    "ceoTwitter": "https://x.com/techprod_arch",
+    "ceoLinkedin": "https://www.linkedin.com/in/gbagboola/",
     "linkedin": "https://www.linkedin.com/company/flutterwave/",
     "twitter": "https://x.com/theflutterwave",
     "investors": "Tiger Global, Avenir Growth, DST Global",
@@ -964,6 +992,8 @@ const DATA = [
     "employees": "201 - 500",
     "hq": "San Francisco, USA",
     "ceo": "Ham Serunjogi",
+    "ceoTwitter": "https://x.com/hserunjogi",
+    "ceoLinkedin": "https://www.linkedin.com/in/hamserunjogi/",
     "linkedin": "https://www.linkedin.com/company/chippercash/",
     "twitter": "https://x.com/chippercashapp",
     "investors": "FTX (defunct), Ribbit Capital, Bezos Expeditions, SVB Capital",
@@ -984,6 +1014,8 @@ const DATA = [
     "employees": "200 -500",
     "hq": "Maidstone, UK",
     "ceo": "Ridwan Olalere",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/darilldrems/",
     "linkedin": "https://www.linkedin.com/company/lemfi/",
     "twitter": "https://x.com/uselemfi",
     "investors": "Y Combinator, Microtraction, Ventures Platform, Acuity Venture Partners",
@@ -1004,6 +1036,8 @@ const DATA = [
     "employees": "501 - 1000",
     "hq": "Johannesburg, South Africa",
     "ceo": "Dare Okoudjou",
+    "ceoTwitter": "https://x.com/dokoudjou",
+    "ceoLinkedin": "https://www.linkedin.com/in/dokoudjou/",
     "linkedin": "https://www.linkedin.com/company/onafriq1/",
     "twitter": "https://x.com/Onafriq",
     "investors": "AfricInvest, CommerzVentures, Admaius Capital Partners",
@@ -1024,6 +1058,8 @@ const DATA = [
     "employees": "501 - 1000",
     "hq": "London, UK",
     "ceo": "James Lanigan",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/james-lanigan-bb07102?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/lunoglobal/",
     "twitter": "https://x.com/lunoglobal?s=21",
     "investors": "",
@@ -1042,6 +1078,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Washington, D.C., USA",
     "ceo": "Christian\u202fDuffus",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/christian-duffus/",
     "linkedin": "https://www.linkedin.com/company/fonbnk/",
     "twitter": "https://x.com/fonbnk1",
     "investors": "New Form Capital, EchoVC, Lightspeed, Adaverse / Cardano, Tanda",
@@ -1060,6 +1098,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Dover, Delaware",
     "ceo": "Benaiah Wepundi",
+    "ceoTwitter": "https://x.com/b3npayd?s=21",
+    "ceoLinkedin": "https://www.linkedin.com/in/benaiah-ke?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "linkedin": "https://www.linkedin.com/company/mypaydapp/",
     "twitter": "https://x.com/paydhq?s=21",
     "investors": "A2D Ventures, Orbit Startups, AngelSpark.",
@@ -1078,6 +1118,8 @@ const DATA = [
     "employees": "11 - 25",
     "hq": "Hong Kong Island, Hong Kong",
     "ceo": "Shishir Gupta",
+    "ceoTwitter": "https://x.com/ethereumgupta",
+    "ceoLinkedin": "https://www.linkedin.com/in/shishrgupta/?originalSubdomain=hk",
     "linkedin": "https://www.linkedin.com/company/sortedwallet/",
     "twitter": "https://x.com/sortedwallet",
     "investors": "Tether",
@@ -1096,6 +1138,8 @@ const DATA = [
     "employees": "2 - 10",
     "hq": "Newark, Delaware, USA.",
     "ceo": "Abdulfatai\u202fSuleiman",
+    "ceoTwitter": "https://x.com/iamnotstatic",
+    "ceoLinkedin": "https://www.linkedin.com/in/abdulfatai-suleiman-706ba6172/",
     "linkedin": "https://www.linkedin.com/company/blockradar/",
     "twitter": "https://x.com/blockradarhq",
     "investors": "",
@@ -1114,6 +1158,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "Canada",
     "ceo": "David Ajala",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/david-ajala/",
     "linkedin": "https://www.linkedin.com/company/africhange/posts/?feedView=all",
     "twitter": "https://x.com/africhangehq",
     "investors": "",
@@ -1132,6 +1178,8 @@ const DATA = [
     "employees": "51- 80",
     "hq": "Zug, Switzerland",
     "ceo": "Max Kordek",
+    "ceoTwitter": "https://x.com/maxkordek",
+    "ceoLinkedin": "https://www.linkedin.com/in/maxkordek/",
     "linkedin": "https://www.linkedin.com/company/lisk/",
     "twitter": "https://x.com/Lisk",
     "investors": "",
@@ -1150,6 +1198,8 @@ const DATA = [
     "employees": "51- 200",
     "hq": "United States",
     "ceo": "Rene Reinsberg",
+    "ceoTwitter": "https://x.com/RegenRene",
+    "ceoLinkedin": "https://www.linkedin.com/in/reinsberg/",
     "linkedin": "https://www.linkedin.com/company/celo-foundation/",
     "twitter": "https://x.com/Celo",
     "investors": "",
@@ -1170,6 +1220,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Dubai, UAE",
     "ceo": "Mouloukou Sanoh",
+    "ceoTwitter": "https://x.com/mansa_mlk",
+    "ceoLinkedin": "https://www.linkedin.com/in/mouloukou-s-98485010a/?originalSubdomain=ae",
     "linkedin": "https://www.linkedin.com/company/mansa-finance-def/",
     "twitter": "https://x.com/MANSA_FI",
     "investors": "Tether and Polymorphic Capital",
@@ -1190,6 +1242,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "San Francisco, USA",
     "ceo": "Kirill Gertman",
+    "ceoTwitter": "",
+    "ceoLinkedin": "https://www.linkedin.com/in/kirillgertman/",
     "linkedin": "https://www.linkedin.com/company/conduit-financial/",
     "twitter": "https://x.com/ConduitPay",
     "investors": "Circle Ventures, Portage Ventures, Helios Digital Ventures",
@@ -1210,6 +1264,8 @@ const DATA = [
     "employees": "11 - 50",
     "hq": "Beachwood, Ohio",
     "ceo": "Hugo Finkelstein",
+    "ceoTwitter": "https://x.com/hugfink",
+    "ceoLinkedin": "https://www.linkedin.com/in/hugo-finkelstein/",
     "linkedin": "https://www.linkedin.com/company/riseworks/",
     "twitter": "https://x.com/rise_pay",
     "investors": "Draper Associates, Polymorphic Capital, Digital Currency Group, JAM Fund, Ryze Labs, Paradigm Shift Capital, W Ventures, HashKey Capital, others",
@@ -1229,6 +1285,8 @@ const DATA = [
     "employees": "51 - 200",
     "hq": "San Francisco, USA",
     "ceo": "Zach Abrams (Co-founder, now at Stripe)",
+    "ceoTwitter": "https://x.com/zcabrams",
+    "ceoLinkedin": "https://www.linkedin.com/in/zacharyabrams/?utm_source=chatgpt.com",
     "linkedin": "https://www.linkedin.com/company/bridge-apis/",
     "twitter": "https://x.com/stablecoin?lang=en",
     "investors": "Sequoia Capital, Index Ventures, Ribbit Capital, Haun\u202fVentures, Bedrock Fund Management, 1confirmation, Oak\u202fHC/FT",
@@ -1252,18 +1310,18 @@ const SECTION_META = {
 };
 
 const CAT_META = {
-  'Exchange':        { icon:'💱', cls:'tag-exchange' },
-  'Payments':        { icon:'💳', cls:'tag-payments' },
-  'Infrastructure':  { icon:'🏗️', cls:'tag-infrastructure' },
-  'DeFi':            { icon:'⚡', cls:'tag-defi' },
-  'On/Off-Ramp':     { icon:'🔄', cls:'tag-ramp' },
-  'On/off ramp':     { icon:'🔄', cls:'tag-ramp' },
-  'Blockchain':      { icon:'⛓️', cls:'tag-blockchain' },
-  'Stablecoin':      { icon:'🪙', cls:'tag-stablecoin' },
-  'Remittance':      { icon:'✈️', cls:'tag-remittance' },
-  'Wallet':          { icon:'👛', cls:'tag-wallet' },
-  'BaaS':            { icon:'🏦', cls:'tag-baas' },
-  'Savings':         { icon:'💰', cls:'tag-savings' },
+  'Exchange':       { icon:'💱', cls:'tag-exchange' },
+  'Payments':       { icon:'💳', cls:'tag-payments' },
+  'Infrastructure': { icon:'🏗️', cls:'tag-infrastructure' },
+  'DeFi':           { icon:'⚡', cls:'tag-defi' },
+  'On/Off-Ramp':    { icon:'🔄', cls:'tag-ramp' },
+  'On/off ramp':    { icon:'🔄', cls:'tag-ramp' },
+  'Blockchain':     { icon:'⛓️', cls:'tag-blockchain' },
+  'Stablecoin':     { icon:'🪙', cls:'tag-stablecoin' },
+  'Remittance':     { icon:'✈️', cls:'tag-remittance' },
+  'Wallet':         { icon:'👛', cls:'tag-wallet' },
+  'BaaS':           { icon:'🏦', cls:'tag-baas' },
+  'Savings':        { icon:'💰', cls:'tag-savings' },
 };
 
 function tagCls(cat) {
@@ -1277,7 +1335,6 @@ function initials(name) {
   return name.split(/[\s\/]+/).slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
 }
 
-// Build category sidebar dynamically from data
 const catCounts = {};
 DATA.forEach(d => d.categories.forEach(c => { catCounts[c] = (catCounts[c]||0)+1; }));
 const SHOW_CATS = ['Exchange','Payments','Infrastructure','DeFi','On/Off-Ramp','Blockchain','Stablecoin','Remittance','Wallet','BaaS','Savings'];
@@ -1372,12 +1429,10 @@ function buildCard(d) {
   el.onclick = () => openModal(d);
   const tags = d.categories.slice(0,3).map(c=>`<span class="tag ${tagCls(c)}">${c}</span>`).join('');
   const links = [
-    d.website ? `<a class="card-link" href="${d.website}" target="_blank" onclick="event.stopPropagation()" title="Website">↗</a>` : '',
+    d.website  ? `<a class="card-link" href="${d.website}"  target="_blank" onclick="event.stopPropagation()" title="Website">↗</a>` : '',
     d.twitter  ? `<a class="card-link" href="${d.twitter}"  target="_blank" onclick="event.stopPropagation()" title="X/Twitter">𝕏</a>` : '',
     d.linkedin ? `<a class="card-link" href="${d.linkedin}" target="_blank" onclick="event.stopPropagation()" title="LinkedIn">in</a>` : '',
   ].join('');
-  const funding = d.funding || '—';
-  const emp = d.employees || '—';
   el.innerHTML = `
     <div class="card-top"><div class="card-avatar">${initials(d.name)}</div><div class="card-links">${links}</div></div>
     <div class="card-name">${d.name}</div>
@@ -1385,20 +1440,44 @@ function buildCard(d) {
     <div class="card-desc">${d.shortDesc || d.longDesc || ''}</div>
     <div class="card-tags">${tags}</div>
     <div class="card-bottom">
-      <span class="card-funding">${funding}</span>
-      <span class="card-employees">👥 ${emp}</span>
+      <span class="card-funding">${d.funding || '—'}</span>
+      <span class="card-employees">👥 ${d.employees || '—'}</span>
     </div>`;
   return el;
 }
 
 function openModal(d) {
   const tags = d.categories.map(c=>`<span class="tag ${tagCls(c)}">${c}</span>`).join('');
-  const inv = d.investors || null;
+
+  // CEO name — clickable if CEO LinkedIn exists
+  const ceoName = d.ceoLinkedin
+    ? `<a href="${d.ceoLinkedin}" target="_blank">${d.ceo || '—'}</a>`
+    : (d.ceo || '—');
+
+  // Company links
+  const companyLinks = [
+    d.website  ? `<a href="${d.website}"  target="_blank" class="btn btn-primary">Visit Website ↗</a>` : '',
+    d.twitter  ? `<a href="${d.twitter}"  target="_blank" class="btn btn-secondary">𝕏 Follow</a>` : '',
+    d.linkedin ? `<a href="${d.linkedin}" target="_blank" class="btn btn-secondary">LinkedIn</a>` : '',
+  ].filter(Boolean).join('');
+
+  // CEO links
+  const ceoLinks = [
+    d.ceoTwitter  ? `<a href="${d.ceoTwitter}"  target="_blank" class="btn btn-secondary">CEO 𝕏</a>` : '',
+    d.ceoLinkedin ? `<a href="${d.ceoLinkedin}" target="_blank" class="btn btn-secondary">CEO LinkedIn</a>` : '',
+  ].filter(Boolean).join('');
+
+  // Only show divider if BOTH company and CEO links exist
+  const divider = (companyLinks && ceoLinks) ? '<div class="modal-divider"></div>' : '';
+
   document.getElementById('modal-content').innerHTML = `
     <div class="modal-hero">
       <div class="modal-header-row">
         <div class="modal-avatar">${initials(d.name)}</div>
-        <div><div class="modal-name">${d.name}</div><div class="modal-hq">📍 ${d.hq || 'Africa'}</div></div>
+        <div>
+          <div class="modal-name">${d.name}</div>
+          <div class="modal-hq">📍 ${d.hq || 'Africa'}</div>
+        </div>
       </div>
       <div class="modal-tags">${tags}</div>
       <div class="modal-desc">${d.longDesc || d.shortDesc || ''}</div>
@@ -1408,13 +1487,13 @@ function openModal(d) {
         <div class="modal-field"><label>Total Funding</label><p class="hi">${d.funding || '—'}</p></div>
         <div class="modal-field"><label>Latest Round</label><p>${d.latestRound || '—'}</p></div>
         <div class="modal-field"><label>Team Size</label><p>${d.employees || '—'}</p></div>
-        <div class="modal-field"><label>CEO / Founder</label><p>${d.ceo || '—'}</p></div>
+        <div class="modal-field"><label>CEO / Founder</label><p>${ceoName}</p></div>
       </div>
-      ${inv ? `<div class="modal-sub">Investors & Partners</div><div class="modal-investors">${inv}</div>` : ''}
+      ${d.investors ? `<div class="modal-sub">Investors & Partners</div><div class="modal-investors">${d.investors}</div>` : ''}
       <div class="modal-actions">
-        ${d.website ? `<a href="${d.website}" target="_blank" class="btn btn-primary">Visit Website ↗</a>` : ''}
-        ${d.twitter  ? `<a href="${d.twitter}"  target="_blank" class="btn btn-secondary">𝕏 Follow</a>` : ''}
-        ${d.linkedin ? `<a href="${d.linkedin}" target="_blank" class="btn btn-secondary">LinkedIn</a>` : ''}
+        ${companyLinks}
+        ${divider}
+        ${ceoLinks}
       </div>
     </div>`;
   document.getElementById('modal-overlay').classList.add('open');

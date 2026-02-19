@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Africa Crypto Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f1a;
+    --surface: #13131f;
+    --surface2: #1a1a2e;
+    --surface3: #1f1f35;
+    --accent: #f97316;
+    --accent2: #fb923c;
+    --accent-dim: rgba(249,115,22,0.12);
+    --accent-border: rgba(249,115,22,0.25);
+    --text: #f1f0ee;
+    --text2: #a8a3b0;
+    --muted: #5a5468;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.1);
+    --white: #ffffff;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+  .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+  .orb-1 { width: 600px; height: 600px; background: rgba(249,115,22,0.07); top: -200px; left: -200px; }
+  .orb-2 { width: 500px; height: 500px; background: rgba(99,102,241,0.06); bottom: -100px; right: -100px; }
+
+  /* TOPBAR */
+  .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(10,10,15,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-mark { width: 34px; height: 34px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 16px; color: #000; }
+  .logo-text { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 16px; color: var(--white); }
+  .logo-text span { color: var(--accent); }
+  .topbar-search { position: relative; flex: 1; max-width: 420px; }
+  .topbar-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+  .topbar-search input { width: 100%; height: 40px; background: var(--surface); border: 1px solid var(--border2); border-radius: 8px; padding: 0 16px 0 42px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 13.5px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .topbar-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
+  .topbar-search input::placeholder { color: var(--muted); }
+  .count-badge { padding: 5px 12px; background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+
+  /* LAYOUT */
+  .layout { display: flex; padding-top: 64px; min-height: 100vh; position: relative; z-index: 1; }
+
+  /* SIDEBAR */
+  .sidebar { width: 240px; flex-shrink: 0; position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; padding: 28px 0; border-right: 1px solid var(--border); background: rgba(13,13,26,0.4); }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+  .sidebar-section { padding: 0 16px; margin-bottom: 28px; }
+  .sidebar-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); padding: 0 8px; margin-bottom: 8px; }
+  .sidebar-item { display: flex; align-items: center; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 13.5px; color: var(--text2); font-weight: 400; transition: all 0.15s; border: 1px solid transparent; gap: 8px; width: 100%; background: none; text-align: left; }
+  .sidebar-item:hover { background: var(--surface); color: var(--text); }
+  .sidebar-item.active { background: var(--accent-dim); border-color: var(--accent-border); color: var(--accent); font-weight: 500; }
+  .sidebar-item-icon { width: 20px; text-align: center; flex-shrink: 0; font-size: 13px; }
+  .sidebar-item-count { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 100px; background: var(--surface3); color: var(--muted); margin-left: auto; }
+  .sidebar-item.active .sidebar-item-count { background: var(--accent-border); color: var(--accent); }
+  .sidebar-divider { height: 1px; background: var(--border); margin: 8px 16px 20px; }
+
+  /* CONTENT */
+  .content { flex: 1; min-width: 0; padding: 32px 36px; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%); border: 1px solid var(--border2); border-radius: 16px; padding: 32px 36px; margin-bottom: 32px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%); border-radius: 50%; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 14px; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+  .hero h1 { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--white); margin-bottom: 10px; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { font-size: 14px; color: var(--text2); max-width: 520px; margin-bottom: 24px; line-height: 1.6; }
+  .hero-stats { display: flex; gap: 28px; flex-wrap: wrap; align-items: center; }
+  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
+  .hero-stat-num { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .hero-stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .hero-stat-sep { width: 1px; height: 36px; background: var(--border2); }
+
+  /* SECTION HEADERS */
+  .section-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; margin-top: 36px; }
+  .section-header:first-of-type { margin-top: 0; }
+  .section-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px rgba(249,115,22,0.6); flex-shrink: 0; margin-top: 4px; }
+  .section-title-group { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .section-title { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text2); }
+  .section-subtitle { font-size: 11.5px; color: var(--muted); font-weight: 400; line-height: 1.4; }
+  .section-line { flex: 1; height: 1px; background: var(--border); margin-top: 8px; min-width: 20px; max-width: 60px; }
+  .section-cnt { font-size: 12px; font-weight: 600; color: var(--muted); padding: 3px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; white-space: nowrap; margin-top: 2px; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 12px; margin-bottom: 12px; }
+
+  /* CARD */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; cursor: pointer; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.2s; }
+  .card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  .card:hover::before { opacity: 1; }
+  .card:hover .card-links { opacity: 1; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 10px; }
+  .card-avatar { width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--surface3), var(--surface2)); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 15px; color: var(--accent); flex-shrink: 0; }
+  .card-links { display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s; }
+  .card-link { width: 28px; height: 28px; border-radius: 6px; background: var(--surface2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; font-size: 11px; font-weight: 700; transition: all 0.15s; }
+  .card-link:hover { background: var(--accent-dim); border-color: var(--accent-border); color: var(--accent); }
+  .card-name { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 700; color: var(--white); letter-spacing: -0.01em; margin-bottom: 3px; line-height: 1.2; }
+  .card-hq { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .card-desc { font-size: 13px; color: var(--text2); line-height: 1.55; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+  .tag { padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 500; border: 1px solid; }
+  .tag-exchange      { background: rgba(249,115,22,0.1);  border-color: rgba(249,115,22,0.3);  color: #fb923c; }
+  .tag-payments      { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.25); color: #fbbf24; }
+  .tag-infrastructure{ background: rgba(99,102,241,0.1);  border-color: rgba(99,102,241,0.3);  color: #818cf8; }
+  .tag-defi          { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.25); color: #34d399; }
+  .tag-ramp          { background: rgba(232,121,249,0.08);border-color: rgba(232,121,249,0.25);color: #e879f9; }
+  .tag-blockchain    { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.25); color: #38bdf8; }
+  .tag-stablecoin    { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2);  color: #fdba74; }
+  .tag-remittance    { background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.2);  color: #4ade80; }
+  .tag-wallet        { background: rgba(148,163,184,0.08);border-color: rgba(148,163,184,0.2); color: #94a3b8; }
+  .tag-baas          { background: rgba(168,85,247,0.08); border-color: rgba(168,85,247,0.25); color: #c084fc; }
+  .tag-savings       { background: rgba(251,146,60,0.08); border-color: rgba(251,146,60,0.2);  color: #fb923c; }
+  .tag-default       { background: rgba(90,84,104,0.15);  border-color: rgba(90,84,104,0.35);  color: var(--muted); }
+  .card-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto; }
+  .card-funding { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); }
+  .card-employees { font-size: 11px; color: var(--muted); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(12px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto; position: relative; animation: fadeUp 0.22s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px) scale(0.96); } to { opacity:1; transform:translateY(0) scale(1); } }
+  .modal::-webkit-scrollbar { width: 4px; }
+  .modal::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+  .modal-close { position: absolute; top: 18px; right: 18px; width: 30px; height: 30px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border2); color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.15s; z-index: 10; }
+  .modal-close:hover { color: var(--text); background: var(--surface3); }
+  .modal-hero { padding: 28px 28px 22px; border-bottom: 1px solid var(--border); background: linear-gradient(160deg, var(--surface2), var(--surface)); border-radius: 18px 18px 0 0; position: relative; overflow: hidden; }
+  .modal-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(249,115,22,0.12), transparent 70%); }
+  .modal-header-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .modal-avatar { width: 54px; height: 54px; border-radius: 13px; background: var(--surface3); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 20px; color: var(--accent); flex-shrink: 0; }
+  .modal-name { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; line-height: 1.15; }
+  .modal-hq { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .modal-desc { font-size: 14px; color: var(--text2); line-height: 1.65; }
+  .modal-body { padding: 24px 28px; }
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .modal-field { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .modal-field label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.13em; color: var(--muted); display: block; margin-bottom: 4px; }
+  .modal-field p { font-size: 14px; color: var(--text); font-weight: 500; }
+  .modal-field p.hi { color: var(--accent); font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; }
+  .modal-sub { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .modal-investors { font-size: 13.5px; color: var(--text2); line-height: 1.65; margin-bottom: 22px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { padding: 9px 16px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; cursor: pointer; border: none; white-space: nowrap; }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: var(--accent2); box-shadow: 0 4px 16px rgba(249,115,22,0.35); }
+  .btn-secondary { background: var(--surface2); border: 1px solid var(--border2); color: var(--text2); }
+  .btn-secondary:hover { border-color: rgba(249,115,22,0.4); color: var(--accent); background: var(--accent-dim); }
+
+  /* EMPTY */
+  .empty { text-align: center; padding: 80px 20px; color: var(--muted); }
+  .empty .e-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty h3 { font-family: 'Outfit', sans-serif; font-size: 20px; color: var(--text2); margin-bottom: 8px; font-weight: 700; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .topbar { padding: 0 20px; }
+    .content { padding: 20px; }
+    .hero { padding: 24px 20px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .modal-grid { grid-template-columns: 1fr; }
+    .modal-hero, .modal-body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav class="topbar">
+  <a href="#" class="logo">
+    <div class="logo-mark">A</div>
+    <span class="logo-text">Africa<span>Crypto</span></span>
+  </a>
+  <div class="topbar-search">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder="Search companies, locations, categories…" oninput="applyFilters()">
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+    <span class="count-badge" id="count-badge">Loading…</span>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Category</div>
+      <button class="sidebar-item active" data-cat="all" onclick="filterCat(this)">
+        <span class="sidebar-item-icon">⊞</span>
+        <span style="flex:1">All Categories</span>
+        <span class="sidebar-item-count" id="cnt-all">—</span>
+      </button>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Tier</div>
+      <button class="sidebar-item active" data-section="all" onclick="filterSection(this)">
+        <span class="sidebar-item-icon">🌍</span><span style="flex:1">All Tiers</span>
+      </button>
+      <button class="sidebar-item" data-section="Core African Projects" onclick="filterSection(this)">
+        <span class="sidebar-item-icon">⭐</span><span style="flex:1">Core African</span>
+      </button>
+      <button class="sidebar-item" data-section="African-Focused Projects" onclick="filterSection(this)">
+        <span class="sidebar-item-icon">🎯</span><span style="flex:1">Africa-Focused</span>
+      </button>
+      <button class="sidebar-item" data-section="Africa-Serving Projects" onclick="filterSection(this)">
+        <span class="sidebar-item-icon">🌐</span><span style="flex:1">Africa-Serving</span>
+      </button>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section" id="cat-sidebar">
+      <div class="sidebar-label">Browse by Type</div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="hero">
+      <div class="hero-tag">Live Directory</div>
+      <h1>The <em>African</em> Crypto<br>Ecosystem Map</h1>
+      <p>Discover exchanges, payment infrastructure, DeFi protocols, and on/off-ramp providers shaping the future of African crypto and finance.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num" id="vis-count">—</span><span class="hero-stat-label">Companies</span></div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">Tiers</span></div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat"><span class="hero-stat-num">15+</span><span class="hero-stat-label">Countries</span></div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat"><span class="hero-stat-num">$2B+</span><span class="hero-stat-label">Raised</span></div>
+      </div>
+    </div>
+    <div id="directory"></div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+const DATA = [
+  {
+    "name": "VALR",
+    "website": "https://www.valr.com",
+    "categories": [
+      "Exchange",
+      "Infrastructure",
+      "Payments"
+    ],
+    "shortDesc": "South Africa's leading licensed crypto exchange",
+    "longDesc": "VALR is South Africa's leading licensed crypto exchange offering spot and derivatives trading for 75+ cryptocurrencies. The platform provides stablecoin services, staking, crypto-to-fiat conversions, and B2B payment solutions. As a Category I & II Financial Service Provider licensed by South Africa's FSCA, VALR publishes proof of reserves and serves over 1 million users. Currently expanding to Zambia and East Africa.",
+    "funding": "$50 million",
+    "latestRound": "",
+    "employees": "51 - 200",
+    "hq": "Johannesburg, South Africa",
+    "ceo": "Farzam Ehsani",
+    "linkedin": "https://www.linkedin.com/company/valr/",
+    "twitter": "https://x.com/valrdotcom?s=21",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Busha",
+    "website": "https://www.busha.io/",
+    "categories": [
+      "Exchange",
+      "DeFi",
+      "Savings"
+    ],
+    "shortDesc": "Nigerian crypto exchange with savings and lending products",
+    "longDesc": "Busha is a Nigerian crypto exchange offering Bitcoin, Ethereum, and stablecoin trading with low fees. The platform features crypto savings products (up to 10% APY), curated index products, and lending services. Busha was the first exchange to list the cNGN stablecoin and received a Nigerian SEC Provisional License in September 2024.",
+    "funding": "$4.2M+ (multiple rounds)",
+    "latestRound": "Seed extension (2023)",
+    "employees": "11 - 50",
+    "hq": "Lekki, Nigeria",
+    "ceo": "Michael Adeyeri",
+    "linkedin": "https://www.linkedin.com/company/getbusha/",
+    "twitter": "https://x.com/getbusha?s=21",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Quidax",
+    "website": "https://www.quidax.io",
+    "categories": [
+      "Exchange",
+      "Infrastructure",
+      "Payments"
+    ],
+    "shortDesc": "Nigeria's first SEC-licensed crypto exchange",
+    "longDesc": "Quidax is Nigeria's first SEC-licensed crypto exchange founded in 2018. The platform provides crypto trading, OTC services, and crypto API for fintech companies. Quidax was the first recipient of Nigeria's SEC Provisional License in August 2024 and serves customers in 70+ countries. The exchange was the second to list the cNGN stablecoin.",
+    "funding": "$3.5M total",
+    "latestRound": "$120K seed",
+    "employees": "11 - 50",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Buchi Okoro",
+    "linkedin": "https://www.linkedin.com/company/quidax/",
+    "twitter": "https://x.com/quidaxglobal?s=21",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Kotani pay",
+    "website": "https://kotanipay.com",
+    "categories": [
+      "Infrastructure",
+      "On/Off-Ramp",
+      "Payments"
+    ],
+    "shortDesc": "Crypto payments gateway connecting blockchain to mobile money",
+    "longDesc": "Kotani Pay is a Kenyan crypto payments gateway connecting blockchain to mobile money via USSD, enabling offline functionality. The platform enables stablecoin off-ramping to mobile wallets and pioneered cKES (Kenya Shilling stablecoin) micro-loans. Operations span Kenya, South Africa, Cameroon, and Tanzania. Licensed as a Financial Service Provider in South Africa (License #53594), Kotani Pay has processed $23M in total transactions with an average transaction size of $150K.",
+    "funding": "US$2 million in a pre-seed round",
+    "latestRound": "Pre-seed - $2M (2023)",
+    "employees": "11 - 50",
+    "hq": "Nairobi, Kenya",
+    "ceo": "Felix Macharia",
+    "linkedin": "https://www.linkedin.com/company/kotanipay/",
+    "twitter": "https://x.com/kotanipay?s=21",
+    "investors": "DCG/Luno, Flori Ventures, Adaverse, Peer VC",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Paychant",
+    "website": "https://paychant.com",
+    "categories": [
+      "On/off ramp for stablecoins"
+    ],
+    "shortDesc": "A payment infrastructure bridging stablecoins and Africa\u2019s traditional payment systems \u2014 enabling fiat-to-crypto (and crypto-to-fiat) conversions via local rails.",
+    "longDesc": "Paychant provides API and widget tools that allow apps, wallets, and dApps to integrate fiat on-ramps and off-ramps for stablecoins across Africa\u2019s local payment networks (bank transfers, mobile money). It handles compliance (KYC/AML), liquidity, widget / API integration, and supports conversion between fiat and stablecoins seamlessly in a regulated way. It\u2019s designed for developers and businesses needing to integrate stablecoin access into their platforms, while abstracting away the complexities of local rails, liquidity, and compliance.",
+    "funding": "$500,000 across two Pre Seed funding rounds",
+    "latestRound": "Pre seed",
+    "employees": "11 - 50",
+    "hq": "63/66 Hatton Garden, Fifth Floor, Suite 23, London, England, EC1N 8LE",
+    "ceo": "Moses Morayo Adeniji.",
+    "linkedin": "https://www.linkedin.com/company/paychant/",
+    "twitter": "https://x.com/paychant?s=21",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Scalex",
+    "website": "https://scalex.africa",
+    "categories": [
+      "Stablecoin payments infrastructure"
+    ],
+    "shortDesc": "A hybrid payments protocol/ infrastructure that merges traditional finance (fiat rails) with Web3 / stablecoin rails to enable fast, low-cost, interoperable payment solutions in emerging markets.",
+    "longDesc": "It aims to solve the problems in P2P and fiat-crypto ramp/on-ramp markets in Africa: fraud, inefficiencies, poor liquidity, high friction. It provides API/SDKs, multi-chain stablecoin swaps, bridges between local fiat/currencies & stablecoins (USDT, USDC etc.), allows businesses (wallets, exchanges, Defi platforms) to integrate its rails, and also permits liquidity providers to add liquidity, and individuals to use its services. It supports multiple chains (e.g. Solana, Polygon, BSC etc.) for USDT/USDC, provides withdrawals to bank accounts, and aims to have strong multi-chain / cross-chain stablecoin capabilities.",
+    "funding": "$190,000",
+    "latestRound": "Seed",
+    "employees": "2 - 10",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Nnaemeka Nwosu",
+    "linkedin": "https://www.linkedin.com/company/scalexramp/",
+    "twitter": "https://x.com/scalexramp?s=21",
+    "investors": "EMURGO (EMURGO Africa), Adaverse (Cardano ecosystem accelerator), and Hacked Capital",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Bitsika",
+    "website": "https://www.bitsika.com",
+    "categories": [
+      "On/off ramp"
+    ],
+    "shortDesc": "An app that enables users to top up virtual Visa cards using cryptocurrencies like Bitcoin and USDT, send and receive payments, and perform cross-border transfers.",
+    "longDesc": "Bitsika is a crypto payments and wallet platform aimed at African (and global) users. Users can load virtual Visa cards with crypto (BTC, USDT) on supported networks (BTC, ERC-20, BEP-20), then use those cards globally online. Additionally, Bitsika supports peer-to-peer (P2P) transfers, remittances, social payments, buying and selling crypto, issuing virtual cards, and enabling users to send money across countries.",
+    "funding": "US$1.05M",
+    "latestRound": "Seed round",
+    "employees": "11 - 50",
+    "hq": "Accra, Ghana",
+    "ceo": "Atsu Davoh",
+    "linkedin": "https://www.linkedin.com/company/bitsika/",
+    "twitter": "https://x.com/bitsikaafrica?s=21",
+    "investors": "Microtraction (lead on early seed), YZi Labs / Binance Labs (listed in some databases), and Berrywood Capital",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "BitPesa/ AZA Finance",
+    "website": "https://www.bitpesa.co",
+    "categories": [
+      "On/off ramp"
+    ],
+    "shortDesc": "A platform to provide fast, cost-effective payments, remittances and foreign exchange to and from African \u201cfrontier markets,\u201d using local bank / mobile money rails + blockchain/crypto settlement in some cases.",
+    "longDesc": "BitPesa aimed to reduce cost and latency of cross-border payments / remittances in Africa. It uses blockchain / cryptocurrency (historically Bitcoin) to settle FX / payments in some corridors, connecting African currencies / bank or mobile money accounts, enabling businesses to send / receive payments across African and non-African markets. It rebranded under parent company AZA and has expanded offices in Lagos, London, Dakar, etc. The platform serves businesses and remittance service providers; also has API infrastructure for white-label payments.",
+    "funding": "US$2.5M",
+    "latestRound": "US$15 million in debt funding",
+    "employees": "201 - 500",
+    "hq": "Nairobi, Kenya",
+    "ceo": "Elizabeth Rossiello",
+    "linkedin": "https://www.linkedin.com/company/azafinance/",
+    "twitter": "https://x.com/aza_africa?s=21",
+    "investors": "Greycroft, Plug and Play, Draper Associates",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Zone",
+    "website": "https://zonenetwork.com/",
+    "categories": [
+      "Infrastructure",
+      "Blockchain",
+      "Payments"
+    ],
+    "shortDesc": "Africa's first regulated blockchain payment network",
+    "longDesc": "Zone is Africa's first regulated blockchain network for payments, licensed by the Central Bank of Nigeria as a payment processor. The platform enables banks and fintechs to process fiat payments on blockchain rails with real-time settlement. Zone partners with 24+ banks including GTBank, Zenith Bank, UBA, and First Bank. Processed \u20a61 trillion ($636M) in transactions in 2024 and plans to support stablecoins and CBDCs.",
+    "funding": "$8.5M",
+    "latestRound": "Series A (2024)",
+    "employees": "51 - 200",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Obi Emetarom",
+    "linkedin": "https://www.linkedin.com/company/zonenetwork/",
+    "twitter": "https://x.com/zonenetworkhq",
+    "investors": "Flourish Ventures, TLcom Capital",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Juicyway",
+    "website": "https://www.juicyway.co/",
+    "categories": [
+      "Payments",
+      "Remittance",
+      "Cross-Border"
+    ],
+    "shortDesc": "Cross-border payment startup using stablecoins",
+    "longDesc": "Juicyway is a Lagos-based cross-border payment startup facilitating remittances and payments using stablecoins. Operating in stealth mode, the company focuses on Africa-to-diaspora payments and has processed $1.3B in total payment volume since its founding in 2021.",
+    "funding": "US $3 million pre-seed round",
+    "latestRound": "",
+    "employees": "11 - 50",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Ife Johnson",
+    "linkedin": "https://www.linkedin.com/company/juicyway/",
+    "twitter": "https://x.com/juicywayhq",
+    "investors": "P1 Ventures, Ventures Platform, Future Africa, Magic Fund, and Microtraction",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Prestmit",
+    "website": "https://prestmit.io/",
+    "categories": [
+      "Exchange",
+      "On/Off-Ramp"
+    ],
+    "shortDesc": "Digital trading platform for crypto off-ramping",
+    "longDesc": "Prestmit is a Nigerian digital trading platform offering off-ramping services for Bitcoin, Litecoin, Dogecoin, and stablecoins (USDT). The platform enables users to exchange crypto for Nigerian Naira (NGN) or Ghanaian Cedis (GHS) with competitive rates and fast processing.",
+    "funding": "",
+    "latestRound": "",
+    "employees": "51 - 200",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Ayo Adewuyi (Head of Product)",
+    "linkedin": "https://www.linkedin.com/company/prestmit/",
+    "twitter": "https://x.com/prestmit",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Cryptonia",
+    "website": "https://getcryptonia.com/",
+    "categories": [
+      "Exchange",
+      "On/Off-Ramp",
+      "Payments"
+    ],
+    "shortDesc": "Fast stablecoin-to-Naira exchange with 10-second transactions",
+    "longDesc": "Cryptonia is a Nigerian fast-growing stablecoin exchange launched in January 2025, specializing in 10-second stablecoin-to-Naira conversions. The platform focuses on serving freelancers, remote workers, and small businesses converting USDT/USDC to Naira with no transfer fees and competitive rates. As a Circle Alliance Partner, Cryptonia has processed $5M+ in transaction volume with 2,000+ users.",
+    "funding": "",
+    "latestRound": "",
+    "employees": "2 - 10",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Oluwatimilehin Oluwasanmi",
+    "linkedin": "https://www.linkedin.com/company/getcryptonia/",
+    "twitter": "https://x.com/getcryptonia",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Shiga Digital",
+    "website": "https://shiga.io/",
+    "categories": [
+      "Infrastructure",
+      "B2B Payments",
+      "Treasury"
+    ],
+    "shortDesc": "Stablecoin bank for businesses providing dollar liquidity",
+    "longDesc": "Shiga Digital is a Nigerian B2B stablecoin bank providing dollar liquidity rails for businesses. The platform serves oil & gas firms, fintechs for international settlements, investor money movement, and payroll services. Currently services 5+ fintechs and operates in the B2B payments and treasury management space.",
+    "funding": "",
+    "latestRound": "Early-stage",
+    "employees": "2 - 10",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Dami Etomi",
+    "linkedin": "https://www.linkedin.com/company/shigadigital/",
+    "twitter": "https://x.com/shigadigital",
+    "investors": "Tether",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Canza Finance",
+    "website": "https://canza.io/",
+    "categories": [
+      "DeFi",
+      "Payments",
+      "Cross-Border"
+    ],
+    "shortDesc": "Web3 neobank for African cross-border settlements",
+    "longDesc": "Canza Finance is a Nigerian Web3 neobank building the Baki DeFi platform for African cross-border settlements. The platform enables currency swaps using synthetic tokens (zNGN, zCFA, zZAR), reducing FX fees from 1% to 0.2%. Founded in 2021, Canza has raised $5.5M in total funding, with the latest strategic round of $2.3M led by Polychain Capital in January 2024.",
+    "funding": "$5.5M",
+    "latestRound": "Strategic Round - $2.3M (January 2024)",
+    "employees": "11 - 50",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Pascal Ntsama IV",
+    "linkedin": "https://www.linkedin.com/company/canza-finance/",
+    "twitter": "https://x.com/Canza_Finance",
+    "investors": "Polychain\u202fCapital, Protocol\u202fLabs, Blizzard\u202fFund (Avalanche\u2019s fund), 99\u202fCapital, Stratified\u202fCapital, Hyperithm, Dominance\u202fVentures, Bixin\u202fVentures, ConsenSys\u202fMesh, Protocol Labs again, Emurgo\u202fVentures, MEXC\u202fGlobal, NGC\u202fVentures, XanPool, HashKey\u202fCapital",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Convexity / Africa Stablecoin Consortium",
+    "website": "https://asc.africa/",
+    "categories": [
+      "Infrastructure",
+      "Stablecoin Issuer"
+    ],
+    "shortDesc": "Creator of cNGN, Nigeria's first regulated Naira stablecoin",
+    "longDesc": "Convexity is a Nigerian blockchain solutions firm leading the Africa Stablecoin Consortium (ASC). The company developed cNGN, Nigeria's first regulated Naira-pegged stablecoin with 1:1 peg, approved by the SEC under the Regulatory Incubation Framework in August 2024. As of July 2025, cNGN has processed $2.5M+ in transactions with 121.3M tokens in circulation across 127 holders. Consortium members include Convexity, Alpha Geek, Digital Currency Coalition, and Interstellar.",
+    "funding": "",
+    "latestRound": "Pre-seed (UNICEF Venture Fund, 2023)",
+    "employees": "11 - 50",
+    "hq": "Abuja, Nigeria",
+    "ceo": "Adedeji Owonibi",
+    "linkedin": "https://www.linkedin.com/company/convexity/",
+    "twitter": "https://x.com/withconvexity_",
+    "investors": "UNICEF Venture Fund (direct), broader ecosystem ties with DeFi Technologies Inc., Coinbase Ventures, Adaverse (via cNGN infrastructure)",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Spenda",
+    "website": "https://spenda.africa/?utm_campaign=linkinbio&utm_medium=referral&utm_source=later-linkinbio",
+    "categories": [
+      "Off-ramps"
+    ],
+    "shortDesc": "Spenda is an app that lets Africans spend cryptocurrency effortlessly in everyday life. It converts your crypto to fiat in real time so you can pay bills, transfer money, make purchases, and use cards instantly, all at competitive, frequently updated rates.",
+    "longDesc": "Spenda is a powerfully designed to make everyday crypto spending simple, fast, and seamless for Africans. With real-time conversion from cryptocurrency to local fiat currencies, Spenda enables instant payments, money transfers, and purchases without the usual delays or complexity. Whether you're paying bills, sending funds to a bank account, or using your card online or in-store, Spenda uses your crypto as the source of funds.",
+    "funding": "",
+    "latestRound": "",
+    "employees": "11 - 50",
+    "hq": "Lekki, Nigeria",
+    "ceo": "Daniel Anwuli",
+    "linkedin": "https://www.linkedin.com/company/spenda-africa-limited/?utm_campaign=linkinbio&utm_medium=referral&utm_source=later-linkinbio",
+    "twitter": "https://x.com/MySpenda",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Useazza",
+    "website": "https://www.useazza.com",
+    "categories": [
+      "On/off ramp"
+    ],
+    "shortDesc": "UseAzza is a WhatsApp-based crypto on-ramp and off-ramp that lets Africans buy, sell, receive, and cash out crypto instantly in local currencies.",
+    "longDesc": "UseAzza is a crypto on-ramp and off-ramp platform built directly into WhatsApp, designed to make digital asset transactions simple and accessible for African users. With Azza, anyone can buy, sell, swap, or cash out crypto through chat, with support for local currencies across key African markets. Its mission is to remove barriers to crypto adoption by offering fast settlements, user-friendly onboarding, and secure P2P-style transactions.",
+    "funding": "Azza won a grant from Base after participating in a Base hackathon.",
+    "latestRound": "",
+    "employees": "2 - 10",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Toochukwu Okoro",
+    "linkedin": "https://www.linkedin.com/company/useazza/",
+    "twitter": "https://x.com/useazza?s=21",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "iExchange",
+    "website": "https://iexchange.global/",
+    "categories": [
+      "Crypto on/off-ramp",
+      "P2P stablecoin gateway"
+    ],
+    "shortDesc": "A peer-to-peer on/off-ramp and stablecoin gateway focused on the Global South; provides SDKs and tools to integrate fiat, stablecoin flows into wallets and DeFi protocols.",
+    "longDesc": "iExchange (iExchangeP2P) builds infrastructure for stablecoin interoperability and fiat on/off-ramp in emerging markets. The platform lets users place P2P buy/sell orders, earn platform rewards, and offers an SDK to embed on/off-ramp functionality into self-custody wallets and DeFi apps. They\u2019ve positioned the product for high P2P activity regions (Africa / Global South) and pursue partner integrations (protocols, wallets, DeFi projects).",
+    "funding": "",
+    "latestRound": "",
+    "employees": "2 - 10",
+    "hq": "Accra, Ghana",
+    "ceo": "Emmanuel Kusi",
+    "linkedin": "https://www.linkedin.com/company/iexchangeglobal/",
+    "twitter": "https://x.com/iexchangep2p?s=21",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Nedapay",
+    "website": "https://nedapay.xyz/",
+    "categories": [
+      "On/off ramp"
+    ],
+    "shortDesc": "NEDA\u202fPay is a stablecoin payments platform that enables merchants and creators to accept digital currencies, generate invoices and payment links, and seamlessly convert to local currencies via on\u2011ramp and off\u2011ramp options.",
+    "longDesc": "NEDA\u202fPay is a global fintech solution built for the modern creator and entrepreneur, letting you accept payments in stablecoins, generate customized invoices and QR-based payment links, and monitor performance in real time. With on-ramp and off-ramp capabilities, users can swap their digital assets and withdraw directly to local bank accounts or mobile money wallets",
+    "funding": "No known major VC rounds publicly disclosed; likely still early in funding or operating via lean capital + program / grant support.",
+    "latestRound": "",
+    "employees": "",
+    "hq": "Tanzania",
+    "ceo": "David Machuche",
+    "linkedin": "https://www.linkedin.com/showcase/neda-pay/posts/?feedView=all",
+    "twitter": "https://x.com/nedapay_xyz",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Maplerad",
+    "website": "https://maplerad.com/",
+    "categories": [
+      "Fintech / Banking-as-a-Service (BaaS)"
+    ],
+    "shortDesc": "A BaaS platform allowing businesses to embed payments, accounts, FX, and card issuing via API in Africa",
+    "longDesc": "Maplerad provides modular financial infrastructure: multi-currency accounts, currency exchange, virtual USD card issuing, payouts, identity (KYC), and more. They target startups, enterprises, and fintechs, enabling them to build financial products without building banking infrastructure themselves. They also support wallets (fiat and digital assets), handle on-chain security & gas management, and offer global payouts in 10+ currencies.",
+    "funding": "Raised USD 6 M in a seed round.",
+    "latestRound": "Seed (led by Valar Ventures) in October 2022.",
+    "employees": "11 - 50",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Miracle Anyanwu",
+    "linkedin": "https://www.linkedin.com/company/maplerad/",
+    "twitter": "https://x.com/withmaplerad",
+    "investors": "Valar Ventures, Golden Palm Investments, Michael Vaughn, Babs Ogundeyi, ArMYN Capital, Dunbar Capital, Strawhat Investment, Polymath Capital, Unpopular Ventures, Sean Mahsoul, MyAsiaVC",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Payaza",
+    "website": "https://payaza.africa/",
+    "categories": [
+      "Fintech / Payment Gateway / Financial Infrastructure"
+    ],
+    "shortDesc": "A fintech payment gateway that provides businesses with tools for handling transactions, including multi-currency accounts, payment links, and card processing.",
+    "longDesc": "Payaza is a payment solution provider that aims to be a trusted payment gateway in Africa. It provides a suite of products and services, including APIs for data aggregation and payments, multi-currency accounts, and card acceptance schemes. The company has expanded its operations to multiple continents, including Europe, North America, and the Middle East. It is known for its focus on financial governance and sustainable scaling.",
+    "funding": "\u20a650 billion (~Nigerian Naira) CP program",
+    "latestRound": "In 2025, they got SEC (Nigerian) approval for Series 3 & 4 CP worth \u20a620 billion.",
+    "employees": "51 - 200",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Seyi Ebenezer",
+    "linkedin": "https://www.linkedin.com/company/payaza-africa/",
+    "twitter": "https://x.com/mypayaza",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Bitsave Protocol",
+    "website": "https://bitsave.io/en",
+    "categories": [
+      "DeFi / On-chain Savings"
+    ],
+    "shortDesc": "A decentralized savings protocol that enables users to save on-chain using stablecoins, with an emphasis on goal-oriented savings.",
+    "longDesc": "BitSave is a SaveFi protocol that enables users to set savings goals, lock stablecoins in smart contracts, and earn BTS tokens as rewards. Savings are secured via a \u201cparent-child contract\u201d structure, that is, it  separate smart contracts per user plan, to improve security and ownership. They support multi-chain: e.g., Celo, Base, Lisk. They target \u201cincome earners\u201d in Web3 who want a structured way to save, rather than trade.",
+    "funding": "BitSave raised a Seed round, backed by Leo Capital",
+    "latestRound": "Seed / Pre-Series A (Leo Capital)",
+    "employees": "1 - 10",
+    "hq": "Nigeria",
+    "ceo": "Karla Nwaeke",
+    "linkedin": "",
+    "twitter": "https://x.com/BitsaveProtocol",
+    "investors": "Leo Capital",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "IF\u00c1 Labs",
+    "website": "https://ifalabs.com/",
+    "categories": [
+      "DeFi / Oracle infrastructure"
+    ],
+    "shortDesc": "A multi-chain oracle network delivering real-time and historical price feeds for digital assets, focusing on stablecoins in emerging markets.",
+    "longDesc": "IF\u00c1 Labs provides real-time and historical price feeds for stablecoins, fiat currencies, and other financial instruments via a decentralized oracle network. They support on-chain and off-chain data aggregation, verify data via a \u201cproof-of-source\u201d mechanism, and publish verifiable rates on-chain. They also plan / provide a native \u201cIF\u00c1 Swap\u201d protocol for stablecoin-to-stablecoin swaps prioritizing low slippage and stable execution.",
+    "funding": "Not publicly disclosed",
+    "latestRound": "Not publicly disclosed",
+    "employees": "",
+    "hq": "Lagos, Nigeria",
+    "ceo": "",
+    "linkedin": "",
+    "twitter": "https://x.com/Ifalabs",
+    "investors": "Base, Convexity",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Zerocard",
+    "website": "https://getzerocard.xyz/",
+    "categories": [
+      "Crypto card / Fintech"
+    ],
+    "shortDesc": "Zero card allows you spend crypto like cash with a card that uses crypto directly on-chain.",
+    "longDesc": "",
+    "funding": "Not publicly disclosed",
+    "latestRound": "Not publicly disclosed",
+    "employees": "",
+    "hq": "Nigeria",
+    "ceo": "Folajin Temidayo",
+    "linkedin": "https://www.linkedin.com/company/getzerocard/",
+    "twitter": "https://x.com/getzerocard",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Lazerpay",
+    "website": "https://lazerpay.finance/",
+    "categories": [
+      "Crypto payments"
+    ],
+    "shortDesc": "Lazer pay is a blockchain\u2011powered payment gateway that enables businesses to accept cryptocurrency (stablecoins) globally.",
+    "longDesc": "Lazerpay provided APIs, payment links, buttons, and a business wallet so merchants could receive payments in crypto, particularly stablecoins. It allowed merchants to withdraw earnings in stablecoins or convert them into fiat (e.g., Nigerian Naira, Ghana Cedi, USD).  It also supported swapping among stablecoins (USDT, USDC, BUSD, DAI) and paid out via bank or crypto wallet. Lazerpay aimed to solve cross-border payment fragmentation in Africa by leveraging blockchain to simplify global payments and provide a stable, programmable payout infrastructure.",
+    "funding": "~US$1.1 million",
+    "latestRound": "",
+    "employees": "11 - 50",
+    "hq": "Delaware, USA",
+    "ceo": "Emmanuel Njoku",
+    "linkedin": "https://www.linkedin.com/company/lazerpay/posts/?feedView=all",
+    "twitter": "https://x.com/lazerpay",
+    "investors": "Nestcoin, Nuwa Capital, Voltron Capital, and Paystack\u2019s Shola Akinlade.",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Mazzuma",
+    "website": "https://mazzumagpt.com/",
+    "categories": [
+      "Payments / Remittances"
+    ],
+    "shortDesc": "Mazzuma is a mobile payments ecosystem in Ghana that leverages blockchain and AI to facilitate transactions. They have an AI\u2011powered smart contract generator (MazzumaGPT) for Web3 developers: it helps generate smart contract code from natural language prompts.",
+    "longDesc": "Mazzuma is a software and payments company founded in 2015 and headquartered in Accra, Ghana. Initially a mobile\u2011money payments platform, Mazzuma has evolved into a Web3 infrastructure provider. Their flagship product, MazzumaGPT, leverages artificial intelligence to enable developers to generate smart contract code (e.g., Solidity, Plutus) via natural language prompts\u2014dramatically lowering the barrier to building decentralized applications.",
+    "funding": "~$125K in a pre\u2011seed",
+    "latestRound": "Pre-seed",
+    "employees": "11 - 50",
+    "hq": "Accra, Ghana",
+    "ceo": "Kofi Genfi",
+    "linkedin": "https://www.linkedin.com/company/officialmazzuma/",
+    "twitter": "https://x.com/OfficialMazzuma",
+    "investors": "Adaverse, CV Labs, MTN Ghana, Vodafone Ghana, and AirtelTigo",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Kora",
+    "website": "https://www.korahq.com/",
+    "categories": [
+      "Fintech / Payments Infrastructure"
+    ],
+    "shortDesc": "Kora enables pan\u2011African payment API for pay\u2011ins, payouts, virtual accounts, and card issuance",
+    "longDesc": "Kora provides business payments infrastructure across Africa. Through its APIs, companies can accept payments (pay\u2011ins), send payouts to bank accounts or mobile wallets, and reconcile settlements. It supports multiple currencies and local African payment methods, and emphasizes scalability and localization across African markets.",
+    "funding": "",
+    "latestRound": "Seed",
+    "employees": "51 - 200",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Dickson Nsofor",
+    "linkedin": "https://www.linkedin.com/company/thekorahq/",
+    "twitter": "https://x.com/thekorahq",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Zone (formerly Appzone)",
+    "website": "https://zonenetwork.com/",
+    "categories": [
+      "Layer\u20111 Blockchain for Payments"
+    ],
+    "shortDesc": "Zone is a regulated blockchain network enabling payments / digital currency acceptance for banks and fintechs.",
+    "longDesc": "Zone rebranded from Appzone to build Africa\u2019s first layer\u20111 blockchain network focused on payments. Its blockchain allows direct transaction flows between financial service providers (banks, fintechs) without intermediaries, automating settlement, reconciliation, and dispute management. It supports both fiat and digital currencies, and aims to bring TradFi and DeFi into a hybrid infrastructure.",
+    "funding": "US$\u202f8.5 million",
+    "latestRound": "Seed",
+    "employees": "51 - 200",
+    "hq": "Lekki, Lagos, Nigeria",
+    "ceo": "Obi Emetarom",
+    "linkedin": "https://www.linkedin.com/company/zonenetwork/",
+    "twitter": "https://x.com/zonenetworkhq",
+    "investors": "Flourish Ventures and TLcom Capital, with participation from Digital Currency Group, Verod\u2011Kepple Africa Ventures, Alter Global",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Bitmama",
+    "website": "https://bitmama.io/",
+    "categories": [
+      "Payment Infrastructure / Remittance"
+    ],
+    "shortDesc": "Bitmama enables cryptocurrency exchange and digital-asset payments platform for users in Africa.",
+    "longDesc": "Bitmama started as a P2P crypto exchange, and now offers a full platform for trading, storing, and transferring digital assets. It also has a remittance / payments service (Changera) to support cross-border payments, mobile airtime/data purchases, and global transfers using stablecoins. The mission is to build infrastructure for blockchain payments across emerging markets, focusing on usability, trust, and security.",
+    "funding": "US$\u202f350,000",
+    "latestRound": "Pre-seed",
+    "employees": "11 - 50",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Ruth\u202fIselema",
+    "linkedin": "https://www.linkedin.com/company/bitmamaexchange/",
+    "twitter": "https://x.com/bitmamaexchange",
+    "investors": "Flori Ventures, Emergence Capital, Fedha Capital, angels",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Mara wallet",
+    "website": "https://mara.xyz/lander",
+    "categories": [
+      "Crypto / Fintech"
+    ],
+    "shortDesc": "Mara provides a pan\u2011African crypto wallet and exchange for users to buy, send, and store crypto.",
+    "longDesc": "Mara was founded in 2021 to build a \u201cportal to the crypto economy\u201d in Africa. It offers a consumer\u2011friendly wallet app to buy, sell, send, and hold crypto, as well as a pro\u2011exchange for more advanced users. Mara also planned Mara Chain, a layer\u20111 blockchain for decentralized apps. They raised  funding from big ventures like, Coinbase Ventures, Alameda/FTX, Huobi Ventures, to scale crypto adoption in African markets like Nigeria and Kenya.",
+    "funding": "~$23\u202fmillion",
+    "latestRound": "Seed",
+    "employees": "51 - 200",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Chinyere \u202fNnadi",
+    "linkedin": "https://www.linkedin.com/company/themaraverse/",
+    "twitter": "https://x.com/marawallet_app",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "BoundlessPay",
+    "website": "https://www.boundlesspay.com/",
+    "categories": [
+      "Remittance"
+    ],
+    "shortDesc": "BoundlessPay is a Web3\u2011powered digital banking app for cross-border payments, settlements, and multi-currency wallets",
+    "longDesc": "BoundlessPay is a digital banking platform aimed at eliminating remittance and payment friction in Africa and globally by using blockchain technology. It allows users to send, receive, and swap currencies (fiat and crypto), access virtual USD accounts and cards, and manage multi-currency wallets. The platform emphasizes financial inclusion by providing fast, affordable, and seamless FX services, leveraging stablecoins (e.g., USDT) and Cardano-based USD stablecoins per its reported roadmap.",
+    "funding": "~US$\u202f250,000",
+    "latestRound": "Pre-seed",
+    "employees": "11 - 50",
+    "hq": "Lagos, Nigeria",
+    "ceo": "Franklin Peters",
+    "linkedin": "https://www.linkedin.com/company/boundlesspay/",
+    "twitter": "https://x.com/boundlesspay",
+    "investors": "Tekedia Capital, Adaverse / EMURGO Africa",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Fintava Pay",
+    "website": "https://fintavapay.com/",
+    "categories": [
+      "Banking-as-a-Service (BaaS)"
+    ],
+    "shortDesc": "FintavaPay is a white-label BaaS platform enabling microfinance banks, agent networks, and cooperatives to offer banking services in underserved regions.",
+    "longDesc": "Fintava Pay was launched in 2022, to address financial exclusion in Northern Nigeria. The company provides APIs and white\u2011label banking infrastructure to microfinance institutions, cooperative societies, and \u201csuper agents\u201d so they can create and roll out tailored banking products for their communities. To make its solution accessible in low-digital-literacy regions, Fintava does onboarding in Hausa, sends OTPs to three different family members for account verification, and issues ATM cards for users without smartphones. Its business model includes charging subscription / service fees, transaction-based fees (wallet top-ups, transfers, ATM withdrawals), and fees for card issuance.",
+    "funding": "Not publicly disclosed",
+    "latestRound": "Not publicly disclosed",
+    "employees": "11 - 50",
+    "hq": "Nigeria",
+    "ceo": "Tobi Arowolo",
+    "linkedin": "https://www.linkedin.com/company/fintava-technology/",
+    "twitter": "https://x.com/fintavapay",
+    "investors": "",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Partna/ Coinprofile",
+    "website": "https://coinprofile.com/",
+    "categories": [
+      "Payments"
+    ],
+    "shortDesc": "Partna provides a payments API and B2B payment tools to enable businesses to integrate on-ramp/off-ramp crypto + local currency payments in Africa",
+    "longDesc": "Partna was founded by the team behind Coinprofile / Payourse. They initially built Coinprofile (a crypto wallet link service and remittance tool), but later pivoted fully to build B2B Web3 infrastructure under Partna. Their core products include: a Payments API for businesses, off-ramp and on-ramp services (crypto - fiat), and B2B FX / payout tools. They support multiple cryptocurrencies and local African currencies, aiming to make it easy for global businesses to operate in African markets.",
+    "funding": "US$600,000",
+    "latestRound": "Pre-seed",
+    "employees": "11 - 50",
+    "hq": "Wilmington, Delaware, USA",
+    "ceo": "Bashir Aminu",
+    "linkedin": "https://www.linkedin.com/company/getpartna/",
+    "twitter": "https://x.com/coinpHQ",
+    "investors": "Allegory Capital, Voltron Capital, Flori Ventures, Marek Olszewski & Rene Reinsberg",
+    "section": "Core African Projects"
+  },
+  {
+    "name": "Onboard",
+    "website": "https://www.onboard.xyz/",
+    "categories": [
+      "Infrastructure",
+      "On/Off-Ramp",
+      "Payments"
+    ],
+    "shortDesc": "Onboard is a digital money app for creators and builders whose purpose is to expand the onchain economy, making it universally accessible and enabling anyone, anywhere to live radically better lives.",
+    "longDesc": "Onboard has evolved from a digital money app and global P2P exchange into a comprehensive platform and ecosystem designed to empower onchain builders and creators globally.\u00a0Onboard is a non-custodial crypto wallet with the benefits of a custodial wallet, making it easy for wallet holders to keep their wallets safe by using a simple username and password instead of requiring a 12-word seed phrase.\u00a0Onboard enables people to come onchain with as little as $1 in under 2 minutes, with its gateway providing safe, low-cost, and low-barrier entry to the onchain world.",
+    "funding": "$1.9 million",
+    "latestRound": "Pre-seed",
+    "employees": "11 -50",
+    "hq": "",
+    "ceo": "Yele Bademosi",
+    "linkedin": "https://www.linkedin.com/company/onboardbynestcoin/",
+    "twitter": "https://x.com/OnboardGlobal",
+    "investors": "Lava Ventures, Adaverse, Coinbase Ventures, and Kairos Angels",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Nestcoin",
+    "website": "https://nestcoin.com/",
+    "categories": [
+      "Infrastructure for Emerging Markets"
+    ],
+    "shortDesc": "Nestcoin is a Web3 fintech company building modern banking and crypto tools for creators, innovators, and frontier market users.",
+    "longDesc": "Nestcoin is designing a modern banking experience for creators, builders, and innovators, combining traditional financial services with crypto infrastructure. Their flagship product, Onboard, is a non-custodial wallet that supports stablecoins, peer-to-peer transfers, and virtual USD cards usable globally. Beyond banking, Nestcoin invests in and develops Web3 products including educational platforms, DeFi apps, and gaming/NFT projects, aiming to expand access to economic opportunities in Africa and other frontier markets. Their mission is to empower creators and everyday users with simple, secure, and scalable financial tools in the decentralized economy.",
+    "funding": "US$\u202f6.4 million",
+    "latestRound": "Pre-seed",
+    "employees": "51 - 200",
+    "hq": "",
+    "ceo": "Yele Bademosi",
+    "linkedin": "https://www.linkedin.com/company/nestcoin/",
+    "twitter": "https://x.com/Nestcoin",
+    "investors": "",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Yellow Card",
+    "website": "https://yellowcard.io/",
+    "categories": [
+      "On/off ramps",
+      "Stablecoins payments",
+      "Remittance"
+    ],
+    "shortDesc": "Africa's largest licensed stablecoin on/off-ramp platform",
+    "longDesc": "Yellow Card is Africa's largest and first licensed stablecoin on/off-ramp platform operating in 20+ African countries. The company pivoted from a retail crypto exchange to a B2B-focused stablecoin infrastructure provider, processing USDT, USDC, and PYUSD conversions. Partners with PayPal's Xoom and Coinbase for stablecoin services. Processes $3B in annual transaction volume as of 2024, doubling from $1.5B in 2023.",
+    "funding": "$88M total raised",
+    "latestRound": "Series C - $33M (October 2024)",
+    "employees": "101 - 250",
+    "hq": "Atlanta, Georgia, USA",
+    "ceo": "Chris Maurice",
+    "linkedin": "https://www.linkedin.com/company/yellowcardapp/",
+    "twitter": "https://x.com/yellowcard_app?s=21",
+    "investors": "Polychain Capital, Block Inc., Winklevoss Capital, Third Prime, Castle Island Ventures, Galaxy Ventures",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Flutterwave",
+    "website": "https://flutterwave.com/us/",
+    "categories": [
+      "Payments",
+      "Infrastructure",
+      "Cross-Border"
+    ],
+    "shortDesc": "Africa's most valuable fintech unicorn",
+    "longDesc": "Flutterwave is Africa's most valuable fintech company with a $3B valuation, providing payment infrastructure for merchants across 30+ countries. As a Circle Payment Network partner (announced April 2025), Flutterwave enables USDC cross-border settlements. The company has raised $475M+ in funding and is preparing for an IPO. Flutterwave processes billions in transaction volume annually and serves as critical payment infrastructure for businesses across Africa.",
+    "funding": "$475M+",
+    "latestRound": "Series D - $250M",
+    "employees": "201 - 500",
+    "hq": "San Francisco, USA / Lagos, Nigeria",
+    "ceo": "Olugbenga \"GB\" Agboola",
+    "linkedin": "https://www.linkedin.com/company/flutterwave/",
+    "twitter": "https://x.com/theflutterwave",
+    "investors": "Tiger Global, Avenir Growth, DST Global",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Chipper Cash",
+    "website": "https://www.chippercash.com/",
+    "categories": [
+      "Payments",
+      "Remittance",
+      "Exchange"
+    ],
+    "shortDesc": "Cross-border money transfer app serving 5M+ customers",
+    "longDesc": "Chipper Cash is a cross-border money transfer app serving 5M+ customers across Africa. The platform supports stablecoin funding (USDC, USDT) on Ethereum, Solana, and Base networks, using stablecoins for treasury and settlement operations. As a Ripple Integration Partner (April 2025), Chipper Cash is valued at $1.25B (down from $2B peak) with $300M+ in total funding.",
+    "funding": "$300M+",
+    "latestRound": "Series C",
+    "employees": "201 - 500",
+    "hq": "San Francisco, USA",
+    "ceo": "Ham Serunjogi",
+    "linkedin": "https://www.linkedin.com/company/chippercash/",
+    "twitter": "https://x.com/chippercashapp",
+    "investors": "FTX (defunct), Ribbit Capital, Bezos Expeditions, SVB Capital",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "LemFi",
+    "website": "https://lemfi.com/en-ng/",
+    "categories": [
+      "Payments",
+      "Remittance",
+      "Cross-Border"
+    ],
+    "shortDesc": "Borderless money app for African diaspora",
+    "longDesc": "LemFi is a borderless money app enabling cross-border remittances and payments for the African diaspora. The multi-currency platform supports transfers from UK, US, Canada, and Europe to Africa. Founded by ex-Uber Nigeria and Flutterwave executives, the company partners with Yellow Card for stablecoin on/off-ramp services and serves over 1 million users.",
+    "funding": "$725K",
+    "latestRound": "Pre-seed - $725K (2021)",
+    "employees": "200 -500",
+    "hq": "Maidstone, UK",
+    "ceo": "Ridwan Olalere",
+    "linkedin": "https://www.linkedin.com/company/lemfi/",
+    "twitter": "https://x.com/uselemfi",
+    "investors": "Y Combinator, Microtraction, Ventures Platform, Acuity Venture Partners",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Onafriq",
+    "website": "https://onafriq.com/",
+    "categories": [
+      "Infrastructure",
+      "Payments",
+      "Cross-Border"
+    ],
+    "shortDesc": "Africa's largest digital payments hub",
+    "longDesc": "Onafriq (formerly MFS Africa) is Africa's largest digital payments hub connecting 500M+ mobile wallets, bank accounts, and cash outlets across 35+ countries. The platform is integrated with Stellar blockchain for USDC payments and has a Ripple partnership for crypto rails. As a Circle Payment Network partner (April 2025), Onafriq is valued between $300M-$500M with $300M+ in total funding.",
+    "funding": "$300M+",
+    "latestRound": "Series C - $100M",
+    "employees": "501 - 1000",
+    "hq": "Johannesburg, South Africa",
+    "ceo": "Dare Okoudjou",
+    "linkedin": "https://www.linkedin.com/company/onafriq1/",
+    "twitter": "https://x.com/Onafriq",
+    "investors": "AfricInvest, CommerzVentures, Admaius Capital Partners",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Luno",
+    "website": "https://www.luno.com",
+    "categories": [
+      "Exchange",
+      "Payments",
+      "Infrastructure"
+    ],
+    "shortDesc": "Established crypto exchange with major Africa presence",
+    "longDesc": "Luno is an established crypto exchange founded in 2013 (as BitX, rebranded 2016) with major presence in South Africa, Kenya, and Nigeria. The platform offers Luno Pay for everyday purchases using crypto, processing $112K monthly in South Africa for retail payments. Launched in November 2024, Luno Pay has achieved 80%+ repeat users weekly. Licensed by South Africa's FSCA.",
+    "funding": "~$13.8 million (over multiple rounds)",
+    "latestRound": "~ US$9M Series B",
+    "employees": "501 - 1000",
+    "hq": "London, UK",
+    "ceo": "James Lanigan",
+    "linkedin": "https://www.linkedin.com/company/lunoglobal/",
+    "twitter": "https://x.com/lunoglobal?s=21",
+    "investors": "",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Fonbnk",
+    "website": "https://www.fonbnk.com/",
+    "categories": [
+      "DeFi on\u2011ramp"
+    ],
+    "shortDesc": "Fonbnk drives financial inclusion by giving unbanked / underbanked people access to stablecoins & Web3 via their existing prepaid mobile credit.",
+    "longDesc": "Fonbnk enables mobile-first, cash-based economies (especially in emerging markets) to access digital finance by converting prepaid airtime into stablecoins / digital money. It creates an on\u2011ramp for people who may not have traditional bank accounts but have prepaid SIM credit, turning that value into USD\u2011pegged stablecoins. Through its \u201cwidget\u201d and API tools, developers / businesses can integrate Fonbnk into their apps to support payment, remittances, or Web3\u2011based financial services.",
+    "funding": "~US$3.5 million",
+    "latestRound": "Seed round",
+    "employees": "2 - 10",
+    "hq": "Washington, D.C., USA",
+    "ceo": "Christian\u202fDuffus",
+    "linkedin": "https://www.linkedin.com/company/fonbnk/",
+    "twitter": "https://x.com/fonbnk1",
+    "investors": "New Form Capital, EchoVC, Lightspeed, Adaverse / Cardano, Tanda",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Paydhq",
+    "website": "https://payd.money/",
+    "categories": [
+      "Global payment"
+    ],
+    "shortDesc": "Payd is a payments and financial-management platform for freelancers, creatives and gig workers, enabling fast global receipts, local spending, invoicing and earned-wage solutions.",
+    "longDesc": "Payd (PaydHQ) builds tools to simplify global pay for unstructured-income workers: instant invoices and payment links, multi-currency receipt, spending in local currencies, budgeting pockets, and earned-wage access. The product uses stablecoin and cross-border rails plus a merchant/payment stack and partners with platforms to embed payouts. It targets freelancers, creatives and gig workers across Africa, Southeast Asia and other emerging markets.",
+    "funding": "$400k",
+    "latestRound": "",
+    "employees": "2 - 10",
+    "hq": "Dover, Delaware",
+    "ceo": "Benaiah Wepundi",
+    "linkedin": "https://www.linkedin.com/company/mypaydapp/",
+    "twitter": "https://x.com/paydhq?s=21",
+    "investors": "A2D Ventures, Orbit Startups, AngelSpark.",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Sorted Wallet",
+    "website": "https://www.sorted.io/",
+    "categories": [
+      "Crypto Wallet"
+    ],
+    "shortDesc": "A crypto wallet built for feature phones (KaiOS) and low\u2011powered devices, enabling users to store, send, and receive digital assets like Bitcoin and USDT. It targets emerging markets, including many African countries where feature phones are still widely used. The wallet supports remittances, stablecoins, and crypto cash-out to local mobile money/airtime, which are high-demand use cases in Africa.",
+    "longDesc": "Sorted Wallet is designed to bridge the financial inclusion gap by making crypto accessible on very basic devices. It supports multiple blockchains (Ethereum, Polygon, Tron, TON) and assets (BTC, USDT, etc.) so users can manage their crypto on feature phones, where traditional financial infrastructure is often lacking. Key use-cases: remittances, stablecoin holdings, staking, and inflation-hedging in emerging markets. They also recently integrated the Breez SDK to enable Lightning\u2011fast Bitcoin payments on feature phones via the Lightning Network. Its mission centers on financial inclusion for the unbanked and underbanked populations in Africa, making crypto accessible on low-resource device",
+    "funding": "US$1.5\u202fM",
+    "latestRound": "",
+    "employees": "11 - 25",
+    "hq": "Hong Kong Island, Hong Kong",
+    "ceo": "Shishir Gupta",
+    "linkedin": "https://www.linkedin.com/company/sortedwallet/",
+    "twitter": "https://x.com/sortedwallet",
+    "investors": "Tether",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Blockradar",
+    "website": "https://www.blockradar.co/",
+    "categories": [
+      "Wallet-as-a-Service"
+    ],
+    "shortDesc": "Blockradar is a non\u2011custodial stablecoin wallet infrastructure for fintechs",
+    "longDesc": "Blockradar provides plug\u2011and\u2011play APIs for fintechs to integrate stablecoin wallets (USDC, USDT, etc.) without needing deep blockchain engineering. Key features include: non\u2011custodial wallets, gasless transactions (sponsored fees), autosweeping (automatic treasury management), real-time AML screening, multi-chain & multi-asset support, and API\u2011driven on/off ramps. They support many stablecoins (USDT, USDC, BUSD, DAI, plus local ones like cNGN) across several chains.",
+    "funding": "~$1.2\u202fM in soft commitment funding from Crypto Valley Conference startup competition",
+    "latestRound": "",
+    "employees": "2 - 10",
+    "hq": "Newark, Delaware, USA.",
+    "ceo": "Abdulfatai\u202fSuleiman",
+    "linkedin": "https://www.linkedin.com/company/blockradar/",
+    "twitter": "https://x.com/blockradarhq",
+    "investors": "",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Africhange",
+    "website": "https://africhange.com/",
+    "categories": [
+      "Remittances"
+    ],
+    "shortDesc": "Africhange is a diaspora-focused remittance and cross-border payments platform that lets users in Canada, UK, Australia and elsewhere send money to African countries (Nigeria, Ghana, Kenya), now adding USD virtual accounts and stablecoin funding",
+    "longDesc": "Africhange is a remittance fintech founded to simplify and reduce the cost of sending money between the African diaspora and home countries. The company (Canada-registered / Canada-licensed PSP) offers mobile and web apps to send/receive money across corridors such as Canada - Nigeria and UK - Nigeria, provides competitive FX rates, virtual bank account functionality and P2P features, and has recently launched USD virtual accounts plus Pay with Crypto (USDT/USDC funding) so businesses and individuals can fund transfers with stablecoins. Africhange has also secured IMTO / remittance licensing milestones and strategic bank partnerships (see Partners).",
+    "funding": "",
+    "latestRound": "",
+    "employees": "51 - 200",
+    "hq": "Canada",
+    "ceo": "David Ajala",
+    "linkedin": "https://www.linkedin.com/company/africhange/posts/?feedView=all",
+    "twitter": "https://x.com/africhangehq",
+    "investors": "",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "LISK",
+    "website": "https://lisk.com/",
+    "categories": [
+      "Blockchain"
+    ],
+    "shortDesc": "Ethereum Layer 2 blockchain platform built on OP Superchain, designed for founders in high-growth emerging markets",
+    "longDesc": "Lisk is a cost-efficient, fast, and scalable Ethereum Layer 2 network secured by Ethereum, built on the Optimism Superchain. Founded in 2016, Lisk has been democratizing blockchain accessibility for developers and end-users globally, with a core focus on solving local problems in emerging markets (Africa, Latin America, Southeast Asia) by bringing solutions around real-world assets (RWA), off-chain assets (OCA), and DePIN (Decentralized Physical Infrastructure Networks) onchain. The platform is fully EVM-compatible, enables developers to build using JavaScript/TypeScript, and offers integrated local on/off-ramps for fast, low-cost transactions. Lisk operates incubation programs, grant funding, and a $15M fund to support Web3 founders in emerging markets.",
+    "funding": "$5.7M raised via ICO",
+    "latestRound": "",
+    "employees": "51- 80",
+    "hq": "Zug, Switzerland",
+    "ceo": "Max Kordek",
+    "linkedin": "https://www.linkedin.com/company/lisk/",
+    "twitter": "https://x.com/Lisk",
+    "investors": "",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "Celo",
+    "website": "https://celo.org/",
+    "categories": [
+      "Blockchain"
+    ],
+    "shortDesc": "Ethereum L2 blockchain for fast, low-cost payments, native stablecoins, and DeFi apps focusing on mobile-first accessibility and financial inclusion",
+    "longDesc": "Celo is an Ethereum Layer 2 blockchain that powers fast, low-cost payments, native stablecoins, and DeFi applications, driving real-world adoption and financial inclusion worldwide. Built on the OP Superchain, Celo is designed with a mobile-first approach to make decentralized financial tools accessible to anyone with a smartphone. The platform features token duality (CELO is both native currency and ERC20 compatible), supports multiple native stablecoins (cUSD, cEUR, cREAL), and is carbon-negative with a focus on regenerative finance (ReFi). Celo enables applications to scale to millions of mobile wallet users through MiniPay and connects builders with extensive regional hub networks across Africa, Latin America, and Southeast Asia.",
+    "funding": "$57.2M+ (reported by PitchBook)",
+    "latestRound": "Pre-Seed",
+    "employees": "51- 200",
+    "hq": "United States",
+    "ceo": "Rene Reinsberg",
+    "linkedin": "https://www.linkedin.com/company/celo-foundation/",
+    "twitter": "https://x.com/Celo",
+    "investors": "",
+    "section": "African-Focused Projects"
+  },
+  {
+    "name": "MANSA Finance",
+    "website": "https://www.mansafinance.co/",
+    "categories": [
+      "Infrastructure",
+      "Liquidity Provider",
+      "Payments"
+    ],
+    "shortDesc": "Stablecoin liquidity provider for cross-border payments",
+    "longDesc": "MANSA Finance is a stablecoin liquidity provider offering revolving lines of credit in stablecoins for cross-border payments. The company enables payment companies to settle transactions and fund customer accounts instantly using USDT. They source liquidity from DeFi platforms, quant funds, and institutional investors. Launched in August 2024, they've processed $31M in transactions and are targeting a $1B run rate.",
+    "funding": "$10M seed ($3M equity + $7M liquidity)",
+    "latestRound": "Seed - $10M (February 2025)",
+    "employees": "11 - 50",
+    "hq": "Dubai, UAE",
+    "ceo": "Mouloukou Sanoh",
+    "linkedin": "https://www.linkedin.com/company/mansa-finance-def/",
+    "twitter": "https://x.com/MANSA_FI",
+    "investors": "Tether and Polymorphic Capital",
+    "section": "Africa-Serving Projects"
+  },
+  {
+    "name": "Conduit",
+    "website": "https://conduitpay.com/",
+    "categories": [
+      "Infrastructure",
+      "Payments",
+      "Cross-Border"
+    ],
+    "shortDesc": "Cross-border payment network with stablecoin integration",
+    "longDesc": "Conduit is a cross-border payment network that integrates stablecoins, USD, and local currencies for B2B payments. The platform serves import/export businesses with near-instant settlement capabilities. Connects 20+ banks across 9 countries including Nigeria, Kenya, Ghana, and South Africa. Processes $10B+ in annualized transaction volume (2024), representing 16x growth from 2023.",
+    "funding": "$53M total",
+    "latestRound": "Series A - $36M (May 2025)",
+    "employees": "11 - 50",
+    "hq": "San Francisco, USA",
+    "ceo": "Kirill Gertman",
+    "linkedin": "https://www.linkedin.com/company/conduit-financial/",
+    "twitter": "https://x.com/ConduitPay",
+    "investors": "Circle Ventures, Portage Ventures, Helios Digital Ventures",
+    "section": "Africa-Serving Projects"
+  },
+  {
+    "name": "Rise",
+    "website": "https://www.riseworks.io/",
+    "categories": [
+      "Payroll",
+      "Payments",
+      "Infrastructure"
+    ],
+    "shortDesc": "Hybrid fiat/crypto payroll platform for global contractors",
+    "longDesc": "Rise is a hybrid fiat/crypto payroll platform enabling companies to pay global contractors in fiat while allowing contractors to receive USDC/USDT. The platform serves 190+ countries and is experiencing growth in Africa for remote workforce payments. Founded in 2022, Rise raised $6.3M in Series A funding in November 2023.",
+    "funding": "$6.3M",
+    "latestRound": "Series A - $6.3M (November 2023)",
+    "employees": "11 - 50",
+    "hq": "Beachwood, Ohio",
+    "ceo": "Hugo Finkelstein",
+    "linkedin": "https://www.linkedin.com/company/riseworks/",
+    "twitter": "https://x.com/rise_pay",
+    "investors": "Draper Associates, Polymorphic Capital, Digital Currency Group, JAM Fund, Ryze Labs, Paradigm Shift Capital, W Ventures, HashKey Capital, others",
+    "section": "Africa-Serving Projects"
+  },
+  {
+    "name": "Bridge",
+    "website": "https://www.bridge.xyz/",
+    "categories": [
+      "Infrastructure",
+      "Payments"
+    ],
+    "shortDesc": "Stablecoin payment infrastructure (Stripe-owned)",
+    "longDesc": "Bridge is a stablecoin payment infrastructure company acquired by Stripe for $1.1B in 2024. The platform serves most African payment companies, facilitating stablecoin payments across Africa, Europe, US, and Asia. Founded in 2022, Bridge is now integrated into Stripe's global payment infrastructure.",
+    "funding": "$1.1B acquisition",
+    "latestRound": "Acquired by Stripe - $1.1B (2024)",
+    "employees": "51 - 200",
+    "hq": "San Francisco, USA",
+    "ceo": "Zach Abrams (Co-founder, now at Stripe)",
+    "linkedin": "https://www.linkedin.com/company/bridge-apis/",
+    "twitter": "https://x.com/stablecoin?lang=en",
+    "investors": "Sequoia Capital, Index Ventures, Ribbit Capital, Haun\u202fVentures, Bedrock Fund Management, 1confirmation, Oak\u202fHC/FT",
+    "section": "Africa-Serving Projects"
+  }
+];
+
+const SECTION_META = {
+  'Core African Projects': {
+    title: 'Core African Projects',
+    subtitle: 'HQ in Africa · African founders · Majority African users · Africa-licensed · Solving Africa-specific problems'
+  },
+  'African-Focused Projects': {
+    title: 'African-Focused Projects',
+    subtitle: 'African founders OR significant African operations (20%+ of business) OR Africa as strategic priority OR partnerships with African institutions'
+  },
+  'Africa-Serving Projects': {
+    title: 'Africa-Serving Projects',
+    subtitle: 'Global/international companies with African operations where Africa is one of several markets but providing infrastructure to African companies'
+  }
+};
+
+const CAT_META = {
+  'Exchange':        { icon:'💱', cls:'tag-exchange' },
+  'Payments':        { icon:'💳', cls:'tag-payments' },
+  'Infrastructure':  { icon:'🏗️', cls:'tag-infrastructure' },
+  'DeFi':            { icon:'⚡', cls:'tag-defi' },
+  'On/Off-Ramp':     { icon:'🔄', cls:'tag-ramp' },
+  'On/off ramp':     { icon:'🔄', cls:'tag-ramp' },
+  'Blockchain':      { icon:'⛓️', cls:'tag-blockchain' },
+  'Stablecoin':      { icon:'🪙', cls:'tag-stablecoin' },
+  'Remittance':      { icon:'✈️', cls:'tag-remittance' },
+  'Wallet':          { icon:'👛', cls:'tag-wallet' },
+  'BaaS':            { icon:'🏦', cls:'tag-baas' },
+  'Savings':         { icon:'💰', cls:'tag-savings' },
+};
+
+function tagCls(cat) {
+  for (const [k,v] of Object.entries(CAT_META)) {
+    if (cat.toLowerCase().includes(k.toLowerCase())) return v.cls;
+  }
+  return 'tag-default';
+}
+
+function initials(name) {
+  return name.split(/[\s\/]+/).slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+}
+
+// Build category sidebar dynamically from data
+const catCounts = {};
+DATA.forEach(d => d.categories.forEach(c => { catCounts[c] = (catCounts[c]||0)+1; }));
+const SHOW_CATS = ['Exchange','Payments','Infrastructure','DeFi','On/Off-Ramp','Blockchain','Stablecoin','Remittance','Wallet','BaaS','Savings'];
+const catSidebar = document.getElementById('cat-sidebar');
+SHOW_CATS.forEach(cat => {
+  const cnt = Object.entries(catCounts).reduce((a,[k,v]) => k.toLowerCase().includes(cat.toLowerCase()) ? a+v : a, 0);
+  if (!cnt) return;
+  const meta = CAT_META[cat] || { icon:'▸' };
+  const btn = document.createElement('button');
+  btn.className = 'sidebar-item';
+  btn.dataset.cat = cat;
+  btn.innerHTML = `<span class="sidebar-item-icon">${meta.icon}</span><span style="flex:1">${cat}</span><span class="sidebar-item-count">${cnt}</span>`;
+  btn.onclick = function() { filterCat(this); };
+  catSidebar.appendChild(btn);
+});
+
+let currentCat = 'all', currentSection = 'all';
+
+function filterCat(el) {
+  document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentCat = el.dataset.cat;
+  applyFilters();
+}
+
+function filterSection(el) {
+  document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentSection = el.dataset.section;
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const sections = {};
+  const ORDER = ['Core African Projects','African-Focused Projects','Africa-Serving Projects'];
+  let vis = 0;
+
+  DATA.forEach(d => {
+    const matchCat = currentCat === 'all' || d.categories.some(c => c.toLowerCase().includes(currentCat.toLowerCase()));
+    const matchSec = currentSection === 'all' || d.section === currentSection;
+    const matchQ = !q
+      || d.name.toLowerCase().includes(q)
+      || d.shortDesc.toLowerCase().includes(q)
+      || d.hq.toLowerCase().includes(q)
+      || d.categories.some(c => c.toLowerCase().includes(q))
+      || (d.investors||'').toLowerCase().includes(q)
+      || (d.ceo||'').toLowerCase().includes(q);
+    if (matchCat && matchSec && matchQ) {
+      if (!sections[d.section]) sections[d.section] = [];
+      sections[d.section].push(d);
+      vis++;
+    }
+  });
+
+  document.getElementById('vis-count').textContent = vis;
+  document.getElementById('count-badge').textContent = vis + ' Compan' + (vis===1?'y':'ies');
+  document.getElementById('cnt-all').textContent = vis;
+
+  const dir = document.getElementById('directory');
+  dir.innerHTML = '';
+
+  if (!vis) {
+    dir.innerHTML = '<div class="empty"><div class="e-icon">🌍</div><h3>No results found</h3><p>Try different filters or clear your search</p></div>';
+    return;
+  }
+
+  ORDER.forEach(sec => {
+    if (!sections[sec]) return;
+    const meta = SECTION_META[sec] || { title: sec, subtitle: '' };
+    const label = document.createElement('div');
+    label.className = 'section-header';
+    label.innerHTML = `
+      <div class="section-dot"></div>
+      <div class="section-title-group">
+        <span class="section-title">${meta.title}</span>
+        <span class="section-subtitle">${meta.subtitle}</span>
+      </div>
+      <div class="section-line"></div>
+      <span class="section-cnt">${sections[sec].length}</span>`;
+    dir.appendChild(label);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    sections[sec].forEach(d => grid.appendChild(buildCard(d)));
+    dir.appendChild(grid);
+  });
+}
+
+function buildCard(d) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.onclick = () => openModal(d);
+  const tags = d.categories.slice(0,3).map(c=>`<span class="tag ${tagCls(c)}">${c}</span>`).join('');
+  const links = [
+    d.website ? `<a class="card-link" href="${d.website}" target="_blank" onclick="event.stopPropagation()" title="Website">↗</a>` : '',
+    d.twitter  ? `<a class="card-link" href="${d.twitter}"  target="_blank" onclick="event.stopPropagation()" title="X/Twitter">𝕏</a>` : '',
+    d.linkedin ? `<a class="card-link" href="${d.linkedin}" target="_blank" onclick="event.stopPropagation()" title="LinkedIn">in</a>` : '',
+  ].join('');
+  const funding = d.funding || '—';
+  const emp = d.employees || '—';
+  el.innerHTML = `
+    <div class="card-top"><div class="card-avatar">${initials(d.name)}</div><div class="card-links">${links}</div></div>
+    <div class="card-name">${d.name}</div>
+    <div class="card-hq">📍 ${d.hq || 'Africa'}</div>
+    <div class="card-desc">${d.shortDesc || d.longDesc || ''}</div>
+    <div class="card-tags">${tags}</div>
+    <div class="card-bottom">
+      <span class="card-funding">${funding}</span>
+      <span class="card-employees">👥 ${emp}</span>
+    </div>`;
+  return el;
+}
+
+function openModal(d) {
+  const tags = d.categories.map(c=>`<span class="tag ${tagCls(c)}">${c}</span>`).join('');
+  const inv = d.investors || null;
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-hero">
+      <div class="modal-header-row">
+        <div class="modal-avatar">${initials(d.name)}</div>
+        <div><div class="modal-name">${d.name}</div><div class="modal-hq">📍 ${d.hq || 'Africa'}</div></div>
+      </div>
+      <div class="modal-tags">${tags}</div>
+      <div class="modal-desc">${d.longDesc || d.shortDesc || ''}</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="modal-field"><label>Total Funding</label><p class="hi">${d.funding || '—'}</p></div>
+        <div class="modal-field"><label>Latest Round</label><p>${d.latestRound || '—'}</p></div>
+        <div class="modal-field"><label>Team Size</label><p>${d.employees || '—'}</p></div>
+        <div class="modal-field"><label>CEO / Founder</label><p>${d.ceo || '—'}</p></div>
+      </div>
+      ${inv ? `<div class="modal-sub">Investors & Partners</div><div class="modal-investors">${inv}</div>` : ''}
+      <div class="modal-actions">
+        ${d.website ? `<a href="${d.website}" target="_blank" class="btn btn-primary">Visit Website ↗</a>` : ''}
+        ${d.twitter  ? `<a href="${d.twitter}"  target="_blank" class="btn btn-secondary">𝕏 Follow</a>` : ''}
+        ${d.linkedin ? `<a href="${d.linkedin}" target="_blank" class="btn btn-secondary">LinkedIn</a>` : ''}
+      </div>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+applyFilters();
+</script>
+</body>
+</html>

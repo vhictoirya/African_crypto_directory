@@ -212,7 +212,7 @@ html = """<!DOCTYPE html>
 <div class="orb orb-2"></div>
 <nav class="topbar">
   <a href="#" class="logo">
-    <div class="logo-mark">A</div>
+    <div class="logo-mark">I</div>
     <span class="logo-text">Intelli<span>Sages</span></span>
   </a>
   <div class="topbar-search">

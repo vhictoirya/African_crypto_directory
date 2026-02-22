@@ -190,7 +190,21 @@ html = """<!DOCTYPE html>
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
   @media (max-width: 900px) { .sidebar { display: none; } .topbar { padding: 0 20px; } .content { padding: 20px; } .hero { padding: 24px 20px; } .grid { grid-template-columns: 1fr; } }
-  @media (max-width: 600px) { .modal-grid { grid-template-columns: 1fr; } .modal-hero, .modal-body { padding: 20px; } }
+@media (max-width: 600px) { .modal-grid { grid-template-columns: 1fr; } .modal-hero, .modal-body { padding: 20px; } }
+
+  html.light {
+    --bg: #f8f8f5;
+    --bg2: #f0f0ec;
+    --surface: #ffffff;
+    --surface2: #f5f5f0;
+    --surface3: #ebebE6;
+    --text: #1a1a2e;
+    --text2: #4a4a6a;
+    --muted: #8a8aaa;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.12);
+    --white: #1a1a2e;
+  }
 </style>
 </head>
 <body>
@@ -207,7 +221,7 @@ html = """<!DOCTYPE html>
   </div>
   <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
     <span class="count-badge" id="count-badge">Loading…</span>
-    <button onclick="toggleTheme()" id="theme-btn" ...>🌙 Dark</button>
+    <button onclick="toggleTheme()" id="theme-btn" style="background:var(--surface);border:1px solid var(--border2);color:var(--text2);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px;">🌙 Dark</button>
   </div>
 </nav>
 <div class="layout">

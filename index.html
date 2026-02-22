@@ -144,7 +144,7 @@
 <nav class="topbar">
   <a href="#" class="logo">
     <div class="logo-mark">A</div>
-    <span class="logo-text">Africa<span>Crypto</span></span>
+    <span class="logo-text">Intelli<span>Sages</span></span>
   </a>
   <div class="topbar-search">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -152,6 +152,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
     <span class="count-badge" id="count-badge">Loading…</span>
+    <button onclick="toggleTheme()" id="theme-btn" ...>🌙 Dark</button>
   </div>
 </nav>
 <div class="layout">
@@ -769,26 +770,6 @@ const DATA = [
     "linkedin": "https://www.linkedin.com/company/thekorahq/",
     "twitter": "https://x.com/thekorahq",
     "investors": "",
-    "section": "Core African Projects"
-  },
-  {
-    "name": "Zone (formerly Appzone)",
-    "website": "https://zonenetwork.com/",
-    "categories": [
-      "Layer\u20111 Blockchain for Payments"
-    ],
-    "shortDesc": "Zone is a regulated blockchain network enabling payments / digital currency acceptance for banks and fintechs.",
-    "longDesc": "Zone rebranded from Appzone to build Africa\u2019s first layer\u20111 blockchain network focused on payments. Its blockchain allows direct transaction flows between financial service providers (banks, fintechs) without intermediaries, automating settlement, reconciliation, and dispute management. It supports both fiat and digital currencies, and aims to bring TradFi and DeFi into a hybrid infrastructure.",
-    "funding": "US$\u202f8.5 million",
-    "latestRound": "Seed",
-    "employees": "51 - 200",
-    "hq": "Lekki, Lagos, Nigeria",
-    "ceo": "Obi Emetarom",
-    "ceoTwitter": "https://x.com/obi_emetarom",
-    "ceoLinkedin": "https://www.linkedin.com/in/obiemetarom/",
-    "linkedin": "https://www.linkedin.com/company/zonenetwork/",
-    "twitter": "https://x.com/zonenetworkhq",
-    "investors": "Flourish Ventures and TLcom Capital, with participation from Digital Currency Group, Verod\u2011Kepple Africa Ventures, Alter Global",
     "section": "Core African Projects"
   },
   {
@@ -1505,6 +1486,17 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
+function toggleTheme() {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (root.classList.contains('light')) {
+    root.classList.remove('light');
+    btn.textContent = '🌙 Dark';
+  } else {
+    root.classList.add('light');
+    btn.textContent = '☀️ Light';
+  }
+}
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 applyFilters();
 </script>

@@ -1,18 +1,18 @@
 import pandas as pd
 import json
 
-# ── 1. Pull from Google Sheet ──
+# Pull from Google Sheet
 sheet_id = "1-Sj9cqZa_E7DLnsCuDDljgJnzpcvJ3XmYeDcVD4XZFM"
 url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
 
 df = pd.read_csv(url)
 
-# ── 2. Clean — remove blank rows and section header rows ──
+# Remove blank rows and section header rows
 df = df[df["Name"].notna()]
 df = df[~df["Name"].str.contains("Projects|African founders|Global/international", na=False)]
 df = df[df["Name"].str.strip() != ""]
 
-# ── 3. Map columns to frontend fields ──
+# Map columns to frontend fields
 projects = []
 for _, row in df.iterrows():
     name = str(row.get("Name", "")).strip()
@@ -37,8 +37,8 @@ for _, row in df.iterrows():
         "employees":   clean("Employees"),
         "hq":          clean("HQ"),
         "ceo":         clean("CEO Name"),
-        "ceoTwitter":  clean("CEO X URL"),         # ✅ CEO Twitter/X
-        "ceoLinkedin": clean("CEO LinkedIn URL"),   # ✅ CEO LinkedIn
+        "ceoTwitter":  clean("CEO X URL"),         
+        "ceoLinkedin": clean("CEO LinkedIn URL"),   
         "linkedin":    clean("LinkedIn URL"),
         "twitter":     clean("XURL"),
         "investors":   clean("Investors / Partners"),
@@ -199,7 +199,7 @@ html = """<!DOCTYPE html>
 <nav class="topbar">
   <a href="#" class="logo">
     <div class="logo-mark">A</div>
-    <span class="logo-text">Africa<span>Crypto</span></span>
+    <span class="logo-text">Intelli<span>Sages</span></span>
   </a>
   <div class="topbar-search">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -207,6 +207,7 @@ html = """<!DOCTYPE html>
   </div>
   <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
     <span class="count-badge" id="count-badge">Loading…</span>
+    <button onclick="toggleTheme()" id="theme-btn" ...>🌙 Dark</button>
   </div>
 </nav>
 <div class="layout">
@@ -477,13 +478,24 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
+function toggleTheme() {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (root.classList.contains('light')) {
+    root.classList.remove('light');
+    btn.textContent = '🌙 Dark';
+  } else {
+    root.classList.add('light');
+    btn.textContent = '☀️ Light';
+  }
+}
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 applyFilters();
 </script>
 </body>
 </html>"""
 
-# ── 5. Save as index.html ──
+# Save as index.html 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
